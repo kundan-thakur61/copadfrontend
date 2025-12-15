@@ -37,40 +37,40 @@ const Home = () => {
               </div>
             </div>
 
-            {/* ===== single card with two different links ===== */}
-            <div className="relative">
-              <div className="aspect-square bg-white/25 rounded-4xl p-4 backdrop-blur-sm">
-                {/* two boxes side-by-side on larger screens, stacked on small */}
-                <div className="grid grid-cols-1 sm:grid-cols gap-3 h-full">
-                  
-                  {/* First link -> Products (uses your background image) */}
-                  <Link
-                    to="/themes"
-                    className="block rounded-xl overflow-hidden transform transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
-                    aria-label="View products"
-                  >
-                    <div
-                      className="h-full w-full bg-cover bg-center"
-                      style={{ backgroundImage: `url(${mainBackground})` }}
-                    />
-                  </Link>
+         {/* ===== single card with two different links ===== */}
+<div className="w-full">
+  <div className="bg-white/25 rounded-2xl p-3 backdrop-blur-sm">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      
+      {/* Mobile Covers */}
+      <Link
+        to="/themes"
+        className="block rounded-xl overflow-hidden "
+      >
+        <img
+          src={mainBackground}
+          alt="Mobile Covers"
+          className="w-full h-auto object-contain"
+        />
+      </Link>
 
-                  {/* Second link -> Customizer (gradient + text) */}
-                  <Link
-                    to="/customizer"
-                    className="block rounded-xl overflow-hidden transform transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
-                    aria-label="Create custom cover"
-                  >
-                     <div
-                      className="h-full w-full bg-cover bg-center"
-                      style={{ backgroundImage: `url(${Customised})` }}
-                    />
-                  </Link>
+      {/* Customised Cover */}
+      <Link
+        to="/customizer"
+        className="block rounded-xl overflow-hidden "
+      >
+        <img
+          src={Customised}
+          alt="Customised Cover"
+          className="w-full h-auto object-contain"
+        />
+      </Link>
 
-                </div>
-              </div>
-            </div>
-            {/* ===== end card ===== */}
+    </div>
+  </div>
+</div>
+{/* ===== end card ===== */}
+
           </div>
         </div>
       </section>

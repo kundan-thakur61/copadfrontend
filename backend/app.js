@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -7,6 +8,10 @@ const { generalLimiter, authLimiter } = require('./middleware/rateLimiter');
 
 const logger = require('./utils/logger');
 const errorHandler = require('./middleware/errorHandler');
+
+const { resolveUploadsDir, defaultUploadsPath } = require('./utils/uploadsDir');
+
+const uploadsDir = resolveUploadsDir();
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -22,17 +27,48 @@ const mobileRoutes = require('./routes/mobile');
 const collectionRoutes = require('./routes/collections');
 
 const app = express();
+const frontendBuildPath = path.join(__dirname, '../frontend/dist');
+
+// Render and other managed hosts sit behind a proxy and forward client IPs
+// via X-Forwarded-* headers. Enabling trust proxy ensures downstream
+// middleware such as express-rate-limit reads the correct IP instead of
+// throwing validation errors when those headers are present.
+app.set('trust proxy', 1);
 
 // Serve static files for uploads (accessible via both /uploads and /api/uploads for dev proxying)
-app.use(['/uploads', '/api/uploads'], express.static(path.join(__dirname, 'public/uploads')));
+const uploadStaticDirs = [uploadsDir];
+if (path.resolve(uploadsDir) !== path.resolve(defaultUploadsPath)) {
+  uploadStaticDirs.push(defaultUploadsPath);
+}
+uploadStaticDirs.forEach((dir) => {
+  if (fs.existsSync(dir)) {
+    app.use(['/uploads', '/api/uploads'], express.static(dir));
+  }
+});
 
 // Security middleware
 app.use(helmet({
   crossOriginEmbedderPolicy: false,
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }));
+const defaultAllowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'https://coverghar.in',
+  'https://www.coverghar.in'
+];
+const allowedOrigins = (process.env.CORS_ALLOWED_ORIGINS || '')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
+const corsWhitelist = allowedOrigins.length ? allowedOrigins : defaultAllowedOrigins;
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (corsWhitelist.includes(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
 
@@ -70,6 +106,30 @@ app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/mobile', mobileRoutes);
 app.use('/api/collections', collectionRoutes);
 
+// Root endpoint - API information
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Mobile Cover E-commerce API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      products: '/api/products',
+      orders: '/api/orders',
+      custom: '/api/custom',
+      customDesigns: '/api/custom-designs',
+      uploads: '/api/uploads',
+      wishlist: '/api/wishlist',
+      mobile: '/api/mobile',
+      collections: '/api/collections',
+      admin: '/api/admin',
+      webhooks: '/api/webhooks'
+    },
+    documentation: 'See README.md for API documentation'
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.status(200).json({ 
@@ -78,6 +138,20 @@ app.get('/api/health', (req, res) => {
     environment: process.env.NODE_ENV || 'development'
   });
 });
+
+// Serve the built React app for any non-API route
+if (fs.existsSync(frontendBuildPath)) {
+  app.use(express.static(frontendBuildPath));
+
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return next();
+    }
+    return res.sendFile(path.join(frontendBuildPath, 'index.html'));
+  });
+} else {
+  logger.warn(`Frontend build not found at ${frontendBuildPath}. Skipping static serve.`);
+}
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

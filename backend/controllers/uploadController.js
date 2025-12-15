@@ -2,7 +2,10 @@
 const multer = require('multer');
 const path = require('path');
 const { uploadFromBuffer, uploadFromBase64, deleteImage } = require('../utils/cloudinary');
+const { resolveUploadsDir } = require('../utils/uploadsDir');
 const Product = require('../models/Product');
+
+const uploadsDir = resolveUploadsDir();
 
 /**
  * Multer configuration
@@ -11,7 +14,7 @@ const Product = require('../models/Product');
  */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../public/uploads'));
+    cb(null, uploadsDir);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -85,7 +88,7 @@ async function uploadImage(req) {
       originalname: file.originalname,
       size: file.size,
       url: `/uploads/${file.filename}`,
-      localPath: path.join('public/uploads', file.filename)
+      localPath: path.join(uploadsDir, file.filename)
     };
   });
 

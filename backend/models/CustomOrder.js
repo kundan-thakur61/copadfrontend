@@ -106,6 +106,7 @@ const customOrderSchema = new mongoose.Schema({
 });
 
 // Indexes for better query performance
+customOrderSchema.index({ createdAt: -1 });
 customOrderSchema.index({ userId: 1, createdAt: -1 });
 customOrderSchema.index({ status: 1, createdAt: -1 });
 customOrderSchema.index({ 'payment.razorpayOrderId': 1 });

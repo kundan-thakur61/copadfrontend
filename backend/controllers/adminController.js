@@ -28,6 +28,32 @@ const formatCustomOrderSummary = (order) => ({
   createdAt: order.createdAt
 });
 
+const numberField = (fieldPath) => ({
+  $let: {
+    vars: { value: fieldPath },
+    in: {
+      $cond: [
+        { $in: [{ $type: '$$value' }, ['int', 'long', 'double', 'decimal']] },
+        '$$value',
+        {
+          $cond: [
+            { $eq: [{ $type: '$$value' }, 'string'] },
+            {
+              $convert: {
+                input: '$$value',
+                to: 'double',
+                onError: 0,
+                onNull: 0
+              }
+            },
+            0
+          ]
+        }
+      ]
+    }
+  }
+});
+
 /**
  * GET /api/admin/overview
  * Aggregated metrics for the admin dashboard
@@ -64,22 +90,22 @@ const getDashboardOverview = async (req, res, next) => {
       CustomOrder.countDocuments(),
       CustomOrder.countDocuments({ status: 'pending' }),
       Order.aggregate([
-        { $group: { _id: null, totalRevenue: { $sum: '$total' } } }
-      ]),
+        { $group: { _id: null, totalRevenue: { $sum: numberField('$total') } } }
+      ]).option({ allowDiskUse: true }),
       CustomOrder.aggregate([
-        { $group: { _id: null, totalRevenue: { $sum: '$price' } } }
-      ]),
+        { $group: { _id: null, totalRevenue: { $sum: numberField('$price') } } }
+      ]).option({ allowDiskUse: true }),
       Order.aggregate([
         { $match: { createdAt: { $gte: last7Days } } },
         {
           $group: {
             _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
-            revenue: { $sum: '$total' },
+            revenue: { $sum: numberField('$total') },
             orders: { $sum: 1 }
           }
         },
         { $sort: { _id: 1 } }
-      ]),
+      ]).option({ allowDiskUse: true }),
       Order.aggregate([
         { $unwind: '$items' },
         {
@@ -87,19 +113,21 @@ const getDashboardOverview = async (req, res, next) => {
             _id: '$items.productId',
             title: { $first: '$items.title' },
             model: { $first: '$items.model' },
-            totalQuantity: { $sum: '$items.quantity' },
-            totalSales: { $sum: { $multiply: ['$items.quantity', '$items.price'] } }
+            totalQuantity: { $sum: numberField('$items.quantity') },
+            totalSales: { $sum: { $multiply: [numberField('$items.quantity'), numberField('$items.price')] } }
           }
         },
         { $sort: { totalQuantity: -1 } },
         { $limit: 5 }
-      ]),
+      ]).option({ allowDiskUse: true }),
       Order.find({})
+        .setOptions({ allowDiskUse: true })
         .sort({ createdAt: -1 })
         .limit(5)
         .select('total status createdAt shippingAddress payment userId')
         .populate('userId', 'name email'),
       CustomOrder.find({})
+        .setOptions({ allowDiskUse: true })
         .sort({ createdAt: -1 })
         .limit(5)
         .select('price status createdAt shippingAddress userId productId')
