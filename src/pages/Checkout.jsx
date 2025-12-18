@@ -368,7 +368,11 @@ export default function Checkout() {
                     className="flex items-center justify-between py-2 border-b last:border-b-0"
                   >
                     <div className="flex items-center space-x-3">
-                      <div className="flex-shrink-0 w-12 h-24 bg-gray-100 rounded overflow-hidden relative">
+
+
+                     <div className="flex-shrink-0 w-[100px] h-[150px] bg-gray-100 rounded-xl overflow-hidden relative">
+
+                        
                         {item.product?.design ? (
                           (() => {
                             const thumbOuterW = 48; // inner width slightly smaller to keep aspect
@@ -390,10 +394,29 @@ export default function Checkout() {
                             };
                             return (
                               <>
-                                <div style={{ position: 'absolute', left: sx, top: sy, width: sw, height: sh, overflow: 'hidden', background: '#fff' }}>
-                                  {d.imgSrc ? <img src={d.imgSrc} alt="design" style={imgStyle} /> : null}
-                                </div>
-                                {d.frame && <img src={d.frame} alt="frame" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />}
+                                <div
+  style={{
+    width: '100%',
+    height: '100%',
+    padding: 6,
+    boxSizing: 'border-box',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+  <img
+    src={d.imgSrc}
+    alt="design"
+    style={{
+      maxWidth: '100%',
+      maxHeight: '100%',
+      objectFit: 'contain',
+      display: 'block',
+    }}
+  />
+</div>
+                                {/* {d.frame && <img src={d.frame} alt="frame" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />} */}
                               </>
                             );
                           })()

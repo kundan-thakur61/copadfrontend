@@ -77,7 +77,11 @@ const Cart = () => {
               <div key={`${item.product._id}-${item.variant._id}`} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center space-x-4">
                   {/* Product Image */}
-                  <div className="flex-shrink-0 w-20 h-20 bg-gray-100 rounded-lg overflow-hidden relative">
+
+<div className="flex-shrink-0 w-[100px] h-[150px] bg-gray-100 rounded-xl overflow-hidden relative">
+
+                 
+                    
                     {item.product?.design ? (
                       // Render composed thumbnail: scaled down screen area + frame overlay
                       (() => {
@@ -100,11 +104,32 @@ const Cart = () => {
                         };
                         return (
                           <>
-                            <div style={{ position: 'absolute', left: sx, top: sy, width: sw, height: sh, overflow: 'hidden', background: '#fff' }}>
-                              {d.imgSrc ? <img src={d.imgSrc} alt="design" style={imgStyle} /> : null}
-                            </div>
+                           <div
+  style={{
+    width: '100%',
+    height: '100%',
+    padding: 6,
+    boxSizing: 'border-box',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+  <img
+    src={d.imgSrc}
+    alt="design"
+    style={{
+      maxWidth: '100%',
+      maxHeight: '100%',
+      objectFit: 'contain',
+      display: 'block',
+    }}
+  />
+</div>
+
+
                             {/* frame */}
-                            {d.frame && <img src={d.frame} alt="frame" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />}
+                            {/* {d.frame && <img src={d.frame} alt="frame" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />} */}
                           </>
                         );
                       })()

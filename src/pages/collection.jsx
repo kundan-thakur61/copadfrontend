@@ -510,17 +510,22 @@ const CollectionPage = () => {
                   </label>
                 )}
               </div>
-
-              {galleryImages.length === 0 ? (
+{/*    start  */}
+           {galleryImages.length === 0 ? (
   <div className="border border-dashed rounded-xl p-10 text-center text-gray-500">
     No images yet. {isAdmin ? 'Upload your first shot to bring this page to life.' : 'Please check back soon.'}
   </div>
 ) : (
   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full">
-    {galleryImages.map((image) => {
+    {galleryImages.map((image, index) => {
       const key = image._id || image.publicId || image.url;
+
       const tileSrc = resolveImageUrl(
-        image.url || image.secure_url || image.path || image.publicUrl || ''
+        image.url ||
+        image.secure_url ||
+        image.path ||
+        image.publicUrl ||
+        ''
       );
 
       const isChosen =
@@ -530,69 +535,81 @@ const CollectionPage = () => {
 
       return (
         <button
-          type="button"
           key={key}
+          type="button"
           onClick={() => handleArtworkSelect(image)}
-        className={`relative group rounded-2xl overflow-hidden border transition
-    ${isChosen
-      ? 'border-primary-500 ring-2 ring-primary-200'
-      : 'border-gray-200 hover:border-primary-300'}
-  `}
->
-  <div className="relative w-full aspect-[3/4] bg-gray-50">
-          {/* Image */}
-          <div className="absolute inset-0 flex items-center justify-center p-2">
-            <img
-              src={tileSrc}
-              alt={image.caption || collection.title}
-              className="max-w-full max-h-full object-contain"
-              loading="lazy"
-            />
-          </div>
+          className={`relative group rounded-2xl overflow-hidden border transition
+            ${isChosen
+              ? 'border-primary-500 ring-2 ring-primary-200'
+              : 'border-gray-200 hover:border-primary-300'}
+          `}
+        >
+          <div className="relative w-full aspect-[3/4] bg-gray-50">
 
-          {/* Selected badge */}
-          
-          {isChosen && (
-            <span className="absolute top-3 left-3 flex items-center gap-1 bg-white/90 text-primary-600 text-xs font-semibold px-3 py-1 rounded-full">
-              <FiCheckCircle className="h-4 w-4" />
-              Selected
+            {/* Image */}
+            <div className="absolute inset-0 flex items-center justify-center p-2">
+              <img
+                src={tileSrc}
+                alt={image.caption || collection.title}
+                className="max-w-full max-h-full object-contain"
+                loading="lazy"
+              />
+            </div>
+
+            {/* Selected badge */}
+            {isChosen && (
+              <span className="absolute top-3 left-3 flex items-center gap-1
+                               bg-white/90 text-primary-600 text-xs font-semibold
+                               px-3 py-1 rounded-full">
+                <FiCheckCircle className="h-4 w-4" />
+                Selected
+              </span>
+            )}
+
+            {/* 🔢 Bottom unique number */}
+            <span className="absolute bottom-3 left-1/2 -translate-x-1/2
+                             bg-black/80 text-white text-xs font-semibold
+                             px-3 py-1 rounded-full">
+              {String(index + 1).padStart(2, '0')}
             </span>
-          )}
-         
 
-          {/* Delete button (admin only) */}
-          {isAdmin && (
-            <span
-              role="button"
-              tabIndex={0}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleRemoveImage(image._id);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
+            {/* Delete button (admin only) */}
+            {isAdmin && (
+              <span
+                role="button"
+                tabIndex={0}
+                onClick={(e) => {
                   e.stopPropagation();
                   handleRemoveImage(image._id);
-                }
-              }}
-              className="absolute top-3 right-3 bg-white/90 rounded-full p-2 text-red-600 shadow
-                 opacity-0 group-hover:opacity-100 transition"
-              title="Delete image"
-            >
-              <FiTrash2 />
-            </span>
-          )}
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleRemoveImage(image._id);
+                  }
+                }}
+                className="absolute top-3 right-3 bg-white/90 rounded-full p-2
+                           text-red-600 shadow opacity-0
+                           group-hover:opacity-100 transition"
+                title="Delete image"
+              >
+                <FiTrash2 />
+              </span>
+            )}
 
-
-        </div>
+          </div>
         </button>
-
       );
     })}
-
   </div>
 )}
+
+{/*    end  */}
+
+
+
+
 
             </div>
           </div>
