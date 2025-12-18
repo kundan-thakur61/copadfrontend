@@ -57,16 +57,27 @@ const defaultAllowedOrigins = [
   'https://coverghar.in',
   'https://www.coverghar.in'
 ];
-const allowedOrigins = (process.env.CORS_ALLOWED_ORIGINS || '')
+const envAllowedOrigins = (process.env.CORS_ALLOWED_ORIGINS || '')
   .split(',')
   .map(origin => origin.trim())
   .filter(Boolean);
-const corsWhitelist = allowedOrigins.length ? allowedOrigins : defaultAllowedOrigins;
+const corsWhitelist = Array.from(new Set([
+  ...defaultAllowedOrigins,
+  ...envAllowedOrigins
+]));
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
+    
+    // Check if origin is in whitelist
     if (corsWhitelist.includes(origin)) return callback(null, true);
+    
+    // Allow all Vercel preview deployments (*.vercel.app)
+    if (origin.includes('.vercel.app')) return callback(null, true);
+    
+    // Reject all other origins
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true
