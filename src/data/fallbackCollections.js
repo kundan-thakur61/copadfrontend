@@ -12,6 +12,7 @@ const slugify = (value = '') => value
   .toLowerCase()
   .replace(/[^a-z0-9_-]+/g, '-')
   .replace(/^-+|-+$/g, '');
+  // .replace(/^-+|-+$/g, '');
 
 const RAW_FALLBACK_COLLECTIONS = [
   {
