@@ -406,24 +406,25 @@ export default function Checkout() {
     justifyContent: 'center',
   }}
 >
-  {console.log('Checkout imgSrc:', d.imgSrc)}
-  <img
-    src={resolveImageUrl(d.imgSrc) || ''}
-    alt="design"
-    style={{
-      maxWidth: '100%',
-      maxHeight: '100%',
-      objectFit: 'contain',
-      display: 'block',
-    }}
-  />
+  {d.imgSrc && (
+    <img
+      src={resolveImageUrl(d.imgSrc)}
+      alt="design"
+      style={{
+        maxWidth: '100%',
+        maxHeight: '100%',
+        objectFit: 'contain',
+        display: 'block',
+      }}
+    />
+  )}
 </div>
                                 {/* {d.frame && <img src={d.frame} alt="frame" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />} */}
                               </>
                             );
                           })()
                         ) : (
-                          <img src={item.product.images?.[0] || ''} className="w-full h-full object-cover" />
+                          <img src={resolveImageUrl(item.product.images?.[0]) || ''} className="w-full h-full object-cover" />
                         )}
                       </div>
 

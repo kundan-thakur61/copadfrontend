@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import mobileAPI from '../api/mobileAPI';
+import { resolveImageUrl } from '../utils/helpers';
 
 export default function AdminMobileManagement() {
   const { type } = useParams();
@@ -294,9 +295,9 @@ export default function AdminMobileManagement() {
                     {selectedFrameModel.images.map((img) => (
                       <div key={img._id || img.publicId} className="border rounded-lg overflow-hidden bg-gray-50">
                         <div className="h-64 bg-white flex items-center justify-center border-b">
-                          {img.url ? (
-                            <img src={img.url} alt={`${selectedFrameModel.name} frame`} className="max-h-full max-w-full" />
-                          ) : (
+                          {img.url && (
+                            <img src={resolveImageUrl(img.url)} alt={`${selectedFrameModel.name} frame`} className="max-h-full max-w-full" />
+                          ) || (
                             <span className="text-gray-400">No preview</span>
                           )}
                         </div>

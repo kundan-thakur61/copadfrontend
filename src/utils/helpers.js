@@ -189,7 +189,9 @@ const getAssetBaseUrl = () => {
 
 const normalizeAssetPath = (raw) => {
   if (!raw) return '';
-  const value = normalizeSlashes(String(raw).trim());
+  const stringVal = String(raw).trim();
+  if (stringVal === 'undefined' || stringVal === 'null') return '';
+  const value = normalizeSlashes(stringVal);
   if (/^(?:https?:)?\/\//i.test(value) || value.startsWith('data:') || value.startsWith('blob:')) {
     return value;
   }

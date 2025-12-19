@@ -1,5 +1,5 @@
 import React from 'react'
-import { SCREEN_RECT } from '../utils/helpers'
+import { SCREEN_RECT, resolveImageUrl } from '../utils/helpers'
 
 /**
  * Renders a preview of a custom design with proper scaling and positioning
@@ -49,13 +49,15 @@ export default function DesignPreview({ design }) {
     <>
       {/* Screen area with user image */}
       <div style={screenStyle}>
-        <img
-          src={design.imgSrc}
-          alt={design.name || 'Custom design'}
-          style={imageStyle}
-          className="select-none"
-          draggable={false}
-        />
+        {design.imgSrc && (
+          <img
+            src={resolveImageUrl(design.imgSrc)}
+            alt={design.name || 'Custom design'}
+            style={imageStyle}
+            className="select-none"
+            draggable={false}
+          />
+        )}
       </div>
       
       {/* Frame overlay */}

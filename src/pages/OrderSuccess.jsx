@@ -7,7 +7,7 @@ import orderAPI from '../api/orderAPI';
 import Loader, { PageLoader } from '../components/Loader';
 import OrderTracking from '../components/OrderTracking';
 import SuccessAnimation from '../components/SuccessAnimation';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, resolveImageUrl } from '../utils/helpers';
 import { toast } from 'react-toastify';
 import { useOrderActions } from '../hooks/useOrderActions';
 
@@ -400,7 +400,7 @@ export default function OrderSuccess() {
                         <div className="flex items-center gap-4">
                           {(order?.productImage || order?.items?.[0]?.image) && (
                             <img
-                              src={order?.productImage || order?.items?.[0]?.image}
+                              src={resolveImageUrl(order?.productImage || order?.items?.[0]?.image)}
                               alt="Product"
                               className="w-16 h-16 rounded object-cover border"
                             />

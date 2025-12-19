@@ -3,6 +3,7 @@ import adminAPI from '../api/adminAPI';
 import Loader from '../components/Loader';
 import AdminSidebar from '../components/AdminSidebar';
 import axios from '../api/axiosClient';
+import { resolveImageUrl } from '../utils/helpers';
 // Admin Image Upload Component
 function AdminImageUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -184,9 +185,9 @@ export default function AdminDashboard() {
                       {recentOrders.map((o) => (
                         <tr key={o.id || o._id} className="border-b last:border-b-0">
                           <td className="px-3 py-3">
-                            {o.imageUrl ? (
-                              <img src={o.imageUrl} alt="Order" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 6 }} />
-                            ) : (
+                            {o.imageUrl && (
+                              <img src={resolveImageUrl(o.imageUrl)} alt="Order" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 6 }} />
+                            ) || (
                               <span className="text-gray-400">No image</span>
                             )}
                           </td>

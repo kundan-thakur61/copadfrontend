@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCustomOrders, updateCustomOrderStatus, deleteCustomOrder } from '../redux/slices/adminCustomOrderSlice';
 import Loader from '../components/Loader';
 import AdminShiprocketManagement from '../components/AdminShiprocketManagement';
+import { resolveImageUrl } from '../utils/helpers';
 
 const STATUS_OPTIONS = [
   { value: 'pending', label: 'Pending' },
@@ -139,7 +140,7 @@ export default function AdminCustomOrders() {
                 {order.image && (
                   <div className="mb-4">
                     <h4 className="font-medium mb-2">Image:</h4>
-                    <img src={order.image} alt="Custom order" className="w-32 h-32 object-cover rounded" />
+                    <img src={resolveImageUrl(order.image)} alt="Custom order" className="w-32 h-32 object-cover rounded" />
                   </div>
                 )}
 

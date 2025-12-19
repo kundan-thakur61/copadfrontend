@@ -12,7 +12,7 @@ const FALLBACK_CARDS = FALLBACK_COLLECTIONS.map((collection) => ({
   id: collection._id,
   handle: collection.handle,
   title: collection.title,
-  image: collection.heroImage || collection.images?.[0]?.url,
+  image: (typeof collection.heroImage === 'string' ? collection.heroImage : collection.heroImage?.url) || collection.images?.[0]?.url || '',
   tagline: collection.tagline || DEFAULT_TAGLINE,
   accent: collection.accentColor || DEFAULT_ACCENT,
 }));
@@ -52,7 +52,8 @@ const Themes = () => {
     if (!collections.length) return FALLBACK_CARDS;
 
     const primaryCards = collections.map((item, idx) => {
-      const hero = resolveImageUrl(item?.heroImage);
+      const heroCandidate = typeof item?.heroImage === 'string' ? item.heroImage : item?.heroImage?.url;
+      const hero = resolveImageUrl(heroCandidate);
       const fallback = FALLBACK_CARDS[idx % FALLBACK_CARDS.length];
       return {
         id: item._id || `${item.handle || `c-${idx}`}`,

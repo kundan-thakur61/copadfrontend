@@ -1,4 +1,5 @@
 import React from 'react';
+import { resolveImageUrl } from '../utils/helpers';
 
 const ThemeShowcase = ({ theme, model, models = [], onModelChange }) => {
   const posterUrl = theme?.assets?.posterUrl || theme?.posterUrl || theme?.posterImage;
@@ -31,19 +32,19 @@ const ThemeShowcase = ({ theme, model, models = [], onModelChange }) => {
       </div>
 
       <div className="relative mx-auto w-56 h-[420px] bg-gray-100 rounded-[30px] overflow-hidden shadow-inner">
-        {posterUrl ? (
+        {posterUrl && (
           <img
-            src={posterUrl}
+            src={resolveImageUrl(posterUrl)}
             alt={`${theme?.name || 'Theme'} poster`}
             className="absolute inset-0 w-full h-full object-cover"
           />
-        ) : (
+        ) || (
           <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">Poster preview</div>
         )}
 
         {frameUrl && (
           <img
-            src={frameUrl}
+            src={resolveImageUrl(frameUrl)}
             alt={`${model?.name || 'Phone'} frame`}
             className="absolute inset-0 w-full h-full object-contain pointer-events-none"
           />
