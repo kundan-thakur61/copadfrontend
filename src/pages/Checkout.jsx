@@ -467,14 +467,8 @@ export default function Checkout() {
                   <input type="radio" name="pm" checked={paymentMethod === 'razorpay'} onChange={() => setPaymentMethod('razorpay')} />
                   <span>Pay with Razorpay</span>
                 </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="pm" checked={paymentMethod === 'upi'} onChange={() => setPaymentMethod('upi')} />
-                  <span>Pay with UPI</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="pm"  checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} />
-                  <span>Cash on Delivery</span>
-                </label>
+               
+                
               </div>
               {paymentMethod === 'upi' && (
                 <div className="mt-2 space-y-4">
