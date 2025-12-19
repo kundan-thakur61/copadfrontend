@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { resolveImageUrl } from '../utils/helpers';
 import { Link, useParams } from 'react-router-dom';
 import { FiArrowLeft, FiStar, FiFeather } from 'react-icons/fi';
 import { getThemeBySlug } from '../data/themeCollections';
@@ -179,7 +180,7 @@ const ThemeDetail = () => {
                 <div className="mt-4 relative w-72 h-80 rounded-[28px] overflow-hidden shadow-2xl bg-white">
                   {theme.posterImage ? (
                     <img
-                      src={theme.posterImage}
+                      src={resolveImageUrl(theme.posterImage) || '/placeholder-image.svg'}
                       alt={`${theme.name} poster`}
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
@@ -188,13 +189,13 @@ const ThemeDetail = () => {
                     <div className="absolute inset-0 flex items-center justify-center text-gray-400">No poster</div>
                   )}
                   {frameUrl && (
-                    <img
-                      src={frameUrl}
-                      alt={`${theme.mobileModel?.name || 'Phone'} frame`}
-                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-                      loading="lazy"
-                    />
-                  )}
+                      <img
+                        src={resolveImageUrl(frameUrl) || '/frames/frame-1-fixed.svg'}
+                        alt={`${theme.mobileModel?.name || 'Phone'} frame`}
+                        className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                        loading="lazy"
+                      />
+                    )}
                 </div>
                 <div className="mt-6 flex items-center justify-between text-sm text-gray-600">
                   <span className="flex items-center gap-2">
@@ -243,7 +244,7 @@ const ThemeDetail = () => {
             >
               <div className="relative overflow-hidden bg-gray-50">
                 <img
-                  src={product.image}
+                  src={resolveImageUrl(product.image) || '/placeholder-image.svg'}
                   alt={product.title}
                   className="h-72 w-full object-cover group-hover:scale-105 transition"
                   loading="lazy"

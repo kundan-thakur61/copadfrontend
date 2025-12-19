@@ -20,7 +20,7 @@ import {
 import { toast } from 'react-toastify';
 import mobileAPI from '../api/mobileAPI';
 import Loader from '../components/Loader';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, resolveImageUrl } from '../utils/helpers';
 import { createCustomOrder, createCustomPayment, verifyCustomPayment } from '../redux/slices/customSlice';
 import { FALLBACK_MOBILE_COMPANIES } from '../data/fallbackMobileCompanies';
 
@@ -597,7 +597,7 @@ const CustomMobilePage = () => {
                 <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-slate-100 via-white to-slate-100" />
                 <div className="absolute inset-[18px] rounded-[24px] bg-gray-200 overflow-hidden">
                   {imagePreview ? (
-                    <img src={imagePreview} alt="Uploaded preview" className="w-full h-full object-cover" />
+                    <img src={typeof imagePreview === 'string' ? imagePreview : resolveImageUrl(imagePreview)} alt="Uploaded preview" className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center px-6 text-center">
                       <p className="text-gray-500 text-sm">Upload a photo to preview your custom print</p>

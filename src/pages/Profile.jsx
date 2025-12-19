@@ -6,7 +6,7 @@ import customDesignAPI from '../api/customDesignAPI'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch as useReduxDispatch } from 'react-redux'
 import { addToCart } from '../redux/slices/cartSlice'
-import { formatDate, SCREEN_RECT } from '../utils/helpers'
+import { formatDate, SCREEN_RECT, resolveImageUrl } from '../utils/helpers'
 import { PageLoader } from '../components/Loader';
 import { toast } from 'react-toastify';
 
@@ -227,9 +227,9 @@ export default function Profile() {
                               return (
                                 <>
                                   <div style={{position:'absolute', left:sx, top:sy, width:sw, height:sh, overflow:'hidden', background:'#fff'}}>
-                                    <img src={d.imgSrc} alt={d.name||'design'} style={style} />
-                                  </div>
-                                  {d.frame && <img src={d.frame} alt="frame" className="absolute inset-0 w-full h-full object-cover" />}
+                                    <img src={resolveImageUrl(d.imgSrc) || ''} alt={d.name||'design'} style={style} />
+                                    </div>
+                                    {d.frame && <img src={resolveImageUrl(d.frame) || '/frames/frame-1.svg'} alt="frame" className="absolute inset-0 w-full h-full object-cover" />}
                                 </>
                               )
                             })()

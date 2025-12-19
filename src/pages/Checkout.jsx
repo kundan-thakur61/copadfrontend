@@ -5,7 +5,7 @@ import orderAPI from '../api/orderAPI';
 import authAPI from '../api/authAPI';
 import { selectCartItems, selectCartTotal, clearCart, loadCart } from '../redux/slices/cartSlice';
 import { toast } from 'react-toastify';
-import { formatPrice, SCREEN_RECT } from '../utils/helpers';
+import { formatPrice, SCREEN_RECT, resolveImageUrl } from '../utils/helpers';
 
 const UPI_APPS = [
   { id: 'phonepe', label: 'PhonePe', accent: '#5f259f', hint: 'Instant collect request' },
@@ -223,6 +223,7 @@ export default function Checkout() {
             try {
               await orderAPI.verifyPayment({
                 orderId: order._id || order.id,
+                razorpay_order_id: razorpayOrderId,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
               });
@@ -405,8 +406,9 @@ export default function Checkout() {
     justifyContent: 'center',
   }}
 >
+  {console.log('Checkout imgSrc:', d.imgSrc)}
   <img
-    src={d.imgSrc}
+    src={resolveImageUrl(d.imgSrc) || ''}
     alt="design"
     style={{
       maxWidth: '100%',

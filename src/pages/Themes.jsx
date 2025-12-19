@@ -114,7 +114,7 @@ const Themes = () => {
               >
                 {/* Image */}
                 <img
-                  src={card.image}
+                  src={resolveImageUrl(card.image) || IMAGE_ERROR_FALLBACK}
                   alt={card.title}
                   loading="lazy"
                   onError={handleImgError}
