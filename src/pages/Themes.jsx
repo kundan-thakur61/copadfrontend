@@ -134,6 +134,18 @@ const Themes = () => {
                     {card.tagline}
                   </p>
                 </div> */}
+                 {/* Overlay */}
+                {/* <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" /> */}
+
+                {/* Text */}
+                {/* <div className="relative z-10 h-full flex flex-col justify-end p-4 sm:p-6 text-white">
+                  <h3 className="text-lg sm:text-xl font-semibold">
+                    {card.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                    {card.tagline}
+                  </p>
+                </div> */}
               </Link>
             ))}
       </div>
