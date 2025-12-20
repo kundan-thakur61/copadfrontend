@@ -424,7 +424,22 @@ export default function Checkout() {
                             );
                           })()
                         ) : (
-                          <img src={resolveImageUrl(item.product.images?.[0]) || ''} className="w-full h-full object-cover" />
+<div className="flex-shrink-0 w-[100px] h-[150px] bg-gray-100 rounded-xl overflow-hidden">
+  <img
+    src={
+      resolveImageUrl(
+        item.product?.design?.imgSrc ||
+        item.product?.images?.[0]?.url ||
+        item.product?.images?.[0]
+      )
+    }
+    alt="product"
+    className="w-full h-full object-contain"
+    onError={(e) => {
+      e.currentTarget.src = '/frames/frame-1-fixed.svg';
+    }}
+  />
+</div>
                         )}
                       </div>
 
