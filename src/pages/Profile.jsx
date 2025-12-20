@@ -9,6 +9,8 @@ import { addToCart } from '../redux/slices/cartSlice'
 import { formatDate, SCREEN_RECT, resolveImageUrl } from '../utils/helpers'
 import { PageLoader } from '../components/Loader';
 import { toast } from 'react-toastify';
+import SEO from '../components/SEO';
+import { Helmet } from 'react-helmet-async';
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -126,7 +128,16 @@ export default function Profile() {
   if (loading && !user) return <PageLoader />;
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <SEO
+        title="My Profile | Mobile Covers"
+        description="Manage your account settings and preferences"
+        url="/profile"
+      />
+      <div className="p-6 max-w-3xl mx-auto">
       <h2 className="text-2xl font-semibold mb-4">My Profile</h2>
 
       <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
@@ -257,5 +268,6 @@ export default function Profile() {
             )}
           </div>
     </div>
+    </>
   );
 }

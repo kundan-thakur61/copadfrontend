@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import collectionAPI from '../api/collectionAPI';
 import { FALLBACK_COLLECTIONS } from '../data/fallbackCollections';
 import { resolveImageUrl } from '../utils/helpers';
+import SEO from '../components/SEO';
 
 const DEFAULT_ACCENT = '#0ea5e9';
 const DEFAULT_TAGLINE = 'Fresh drop';
@@ -99,8 +100,23 @@ const Themes = () => {
     }
   };
 
+  const themesSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Mobile Cover Themes & Collections",
+    "description": "Explore our curated themes and collections for custom mobile covers"
+  };
+
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <>
+      <SEO
+        title="Themes & Collections | Mobile Covers"
+        description="Explore our curated themes and collections for custom mobile covers. Designer patterns, trending styles, and exclusive collections."
+        keywords="mobile cover themes, phone case collections, designer covers, trending patterns"
+        url="/themes"
+        schema={themesSchema}
+      />
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
      <div className="w-full">
   <div className="bg-white/25 rounded-2xl p-3 backdrop-blur-sm">
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -159,6 +175,7 @@ const Themes = () => {
     </div>
   </div>
   </section>
+    </>
   );
 };
 

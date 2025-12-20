@@ -21,6 +21,7 @@ import Loader from '../components/Loader';
 import ProductCard from '../components/ProductCard';
 import ProductReviewsSection from '../components/ProductReviewsSection';
 import PincodeChecker from '../components/PincodeChecker';
+import SEO from '../components/SEO';
 import { formatPrice, getAvailableVariants, getProductImage, isInStock, resolveImageUrl } from '../utils/helpers';
 
 
@@ -144,8 +145,42 @@ const ProductDetails = ({ productIdOverride }) => {
   const ratingCount = currentProduct.rating?.count || 0;
   const hasVariants = availableVariants.length > 0;
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": currentProduct.title,
+    "description": currentProduct.description || currentProduct.subtitle || currentProduct.tagline || "Premium custom mobile cover",
+    "image": heroImage,
+    "brand": {
+      "@type": "Brand",
+      "name": currentProduct.brand || "Custom Mobile Covers"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": selectedVariant ? selectedVariant.price : (hasVariants ? Math.min(...availableVariants.map(v => v.price)) : 0),
+      "priceCurrency": "INR",
+      "availability": isInStock(currentProduct) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      "url": typeof window !== 'undefined' ? window.location.href : ''
+    },
+    "aggregateRating": ratingValue > 0 ? {
+      "@type": "AggregateRating",
+      "ratingValue": ratingValue,
+      "reviewCount": ratingCount
+    } : undefined
+  };
+
   return (
-    <div className="min-h-screen bg-[#faf7f2] text-gray-900">
+    <>
+      <SEO
+        title={`${currentProduct.title} | ${currentProduct.brand || 'Mobile Cover'}`}
+        description={currentProduct.description || currentProduct.subtitle || currentProduct.tagline || `Premium ${currentProduct.title} for ${currentProduct.model}. Custom design, high quality protection.`}
+        keywords={`${currentProduct.title}, ${currentProduct.brand}, ${currentProduct.model}, mobile cover, phone case`}
+        image={heroImage}
+        url={`/product/${resolvedProductId}`}
+        type="product"
+        schema={productSchema}
+      />
+      <div className="min-h-screen bg-[#faf7f2] text-gray-900">
     
 
 
@@ -364,6 +399,7 @@ const ProductDetails = ({ productIdOverride }) => {
         
       </main>
     </div>
+    </>
   );
 };
 

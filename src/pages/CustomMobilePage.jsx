@@ -20,6 +20,7 @@ import {
 import { toast } from 'react-toastify';
 import mobileAPI from '../api/mobileAPI';
 import Loader from '../components/Loader';
+import SEO from '../components/SEO';
 import { formatPrice, resolveImageUrl } from '../utils/helpers';
 import { createCustomOrder, createCustomPayment, verifyCustomPayment } from '../redux/slices/customSlice';
 import { FALLBACK_MOBILE_COMPANIES } from '../data/fallbackMobileCompanies';
@@ -528,9 +529,30 @@ const CustomMobilePage = () => {
     }
   };
 
+  const customDesignSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Custom Mobile Cover Design",
+    "description": "Create your own custom mobile cover with premium UV printing",
+    "offers": {
+      "@type": "Offer",
+      "price": selectedMaterial.price,
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock"
+    }
+  };
+
   return (
-    <div className="bg-gray-50 min-h-screen">
-      <section className="bg-gradient-to-br from-primary-700 via-primary-600 to-primary-800 text-white">
+    <>
+      <SEO
+        title="Design Your Own Custom Mobile Cover | Premium UV Printing"
+        description="Create personalized mobile covers with our easy-to-use design tool. Upload your image, choose your phone model, and get premium UV printed covers delivered in 24 hours."
+        keywords="custom mobile cover, design phone case, personalized cover, UV printing, custom design"
+        url="/custom"
+        schema={customDesignSchema}
+      />
+      <div className="bg-gray-50 min-h-screen">
+        <section className="bg-gradient-to-br from-primary-700 via-primary-600 to-primary-800 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -1018,6 +1040,7 @@ const CustomMobilePage = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

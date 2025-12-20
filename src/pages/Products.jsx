@@ -5,6 +5,7 @@ import { fetchProducts, setFilters, clearFilters, setSortBy, setPage } from '../
 import { FiFilter, FiSearch, FiX, FiGrid, FiList } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard';
 import Loader, { CardSkeleton } from '../components/Loader';
+import SEO from '../components/SEO';
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -85,9 +86,24 @@ const Products = () => {
     value !== '' && value !== null && value !== undefined && value !== false
   ).length;
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Mobile Covers Collection",
+    "description": "Browse our collection of custom mobile covers and phone cases"
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <>
+      <SEO 
+        title="Mobile Covers & Phone Cases | Shop Custom Designs" 
+        description="Browse our collection of custom mobile covers and phone cases. Premium quality, unique designs for all phone models." 
+        keywords="mobile covers, phone cases, custom covers, premium phone cases" 
+        url="/products" 
+        schema={productSchema} 
+      />
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Products</h1>
@@ -315,6 +331,7 @@ const Products = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

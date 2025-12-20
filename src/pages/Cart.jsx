@@ -6,6 +6,8 @@ import ProductCard from '../components/ProductCard';
 import { FiShoppingCart, FiTrash2, FiPlus, FiMinus, FiArrowLeft } from 'react-icons/fi';
 import { formatPrice, getProductImage } from '../utils/helpers';
 import { toast } from 'react-toastify';
+import SEO from '../components/SEO';
+import { Helmet } from 'react-helmet-async';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -38,7 +40,16 @@ const Cart = () => {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <>
+        <Helmet>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
+        <SEO
+          title="Shopping Cart | Mobile Covers"
+          description="View your shopping cart"
+          url="/cart"
+        />
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg border text-center">
           <FiShoppingCart className="w-14 h-14 mx-auto text-gray-400 mb-4" />
           <h2 className="text-xl font-bold mb-2">Your Cart is Empty</h2>
@@ -50,11 +61,21 @@ const Cart = () => {
           </Link>
         </div>
       </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <SEO
+        title="Shopping Cart | Mobile Covers"
+        description="Review and checkout your selected items"
+        url="/cart"
+      />
+      <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-6">
         <h1 className="text-2xl font-bold mb-6">Shopping Cart</h1>
 
@@ -199,6 +220,7 @@ const Cart = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

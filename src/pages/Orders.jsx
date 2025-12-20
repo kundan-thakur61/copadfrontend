@@ -5,6 +5,8 @@ import { formatPrice } from '../utils/helpers';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ShipmentTracking from '../components/ShipmentTracking';
+import SEO from '../components/SEO';
+import { Helmet } from 'react-helmet-async';
 
 const STATUS_OPTIONS = [
   { value: '', label: 'All' },
@@ -79,11 +81,21 @@ export default function Orders() {
 
   if (loading) return <PageLoader />;
   if (error) return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <SEO
+        title="My Orders | Mobile Covers"
+        description="View and track your orders"
+        url="/orders"
+      />
+      <div className="p-6 max-w-4xl mx-auto">
       <div className="bg-red-50 border border-red-200 rounded p-4">
         <p className="text-red-700">{error}</p>
       </div>
     </div>
+    </>
   );
 
   // Client-side search/filtering of the fetched page results
@@ -93,7 +105,16 @@ export default function Orders() {
     : orders;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <SEO
+        title="My Orders | Mobile Covers"
+        description="View and track your orders"
+        url="/orders"
+      />
+      <div className="p-6 max-w-4xl mx-auto">
       <h2 className="text-2xl font-semibold mb-4">My Orders</h2>
 
       {/* Filters */}
@@ -254,5 +275,6 @@ export default function Orders() {
         </div>
       </div>
     </div>
+    </>
   );
 }

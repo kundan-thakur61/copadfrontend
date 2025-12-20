@@ -5,6 +5,8 @@ import { login, clearError } from '../redux/slices/authSlice';
 import { toast } from 'react-toastify';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import Loader from '../components/Loader';
+import SEO from '../components/SEO';
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -102,7 +104,16 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <SEO
+        title="Login | Mobile Covers"
+        description="Sign in to your account"
+        url="/login"
+      />
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="w-16 h-16 bg-primary-600 rounded-lg flex items-center justify-center mx-auto mb-4">
@@ -238,6 +249,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

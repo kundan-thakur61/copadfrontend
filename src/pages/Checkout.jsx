@@ -266,13 +266,13 @@ export default function Checkout() {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
+    <div className="p-3 sm:p-6 max-w-4xl mx-auto min-h-screen">
+      <h2 className="text-xl sm:text-2xl font-semibold mb-4">Checkout</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Shipping Form */}
-        <div className="md:col-span-2 bg-white rounded-lg p-4 shadow-sm border">
-          <h3 className="text-lg font-medium mb-3">Shipping Information</h3>
+        <div className="lg:col-span-2 bg-white rounded-lg p-3 sm:p-4 shadow-sm border order-2 lg:order-1">
+          <h3 className="text-base sm:text-lg font-medium mb-3">Shipping Information</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
@@ -358,41 +358,25 @@ export default function Checkout() {
         </div>
 
         {/* Order Summary */}
-        <aside className="bg-white rounded-lg p-4 shadow-sm border">
-          <h3 className="text-lg font-medium mb-3">Order Summary</h3>
+        <aside className="bg-white rounded-lg p-3 sm:p-4 shadow-sm border sticky top-4 order-1 lg:order-2">
+          <h3 className="text-base sm:text-lg font-medium mb-3">Order Summary</h3>
           <div className="space-y-3">
-            <div className="max-h-48 overflow-auto">
+            <div className="max-h-48 lg:max-h-96 overflow-auto">
               {cartItems && cartItems.length > 0 ? (
                 cartItems.map((item, idx) => (
                   <div
                     key={`${item?.product?._id || item?.product?.id || 'p' + idx}-${item?.variant?._id || item?.variant?.id || 'v' + idx}`}
-                    className="flex items-center justify-between py-2 border-b last:border-b-0"
+                    className="flex items-start sm:items-center gap-2 sm:gap-3 py-2 border-b last:border-b-0"
                   >
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-start sm:items-center gap-2 sm:gap-3 flex-1 min-w-0">
 
 
-                     <div className="flex-shrink-0 w-[100px] h-[150px] bg-gray-100 rounded-xl overflow-hidden relative">
+                     <div className="flex-shrink-0 w-16 h-20 sm:w-20 sm:h-28 bg-gray-100 rounded-lg overflow-hidden relative">
 
                         
                         {item.product?.design ? (
                           (() => {
-                            const thumbOuterW = 48; // inner width slightly smaller to keep aspect
-                            const fullW = 260;
-                            const scale = thumbOuterW / fullW;
                             const d = item.product.design;
-                            const t = d.transform || { x: 0, y: 0, scale: 1 };
-                            const sx = SCREEN_RECT.left * scale;
-                            const sy = SCREEN_RECT.top * scale;
-                            const sw = SCREEN_RECT.width * scale;
-                            const sh = SCREEN_RECT.height * scale;
-                            const imgStyle = {
-                              position: 'absolute',
-                              left: `${sx + (sw / 2)}px`,
-                              top: `${sy + (sh / 2)}px`,
-                              transform: `translate(-50%,-50%) translate(${t.x * scale}px, ${t.y * scale}px) scale(${t.scale})`,
-                              transformOrigin: 'center center',
-                              width: `${fullW * scale}px`,
-                            };
                             return (
                               <>
                                 <div
@@ -419,12 +403,11 @@ export default function Checkout() {
     />
   )}
 </div>
-                                {/* {d.frame && <img src={d.frame} alt="frame" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />} */}
                               </>
                             );
                           })()
                         ) : (
-<div className="flex-shrink-0 w-[100px] h-[150px] bg-gray-100 rounded-xl overflow-hidden">
+<div className="flex-shrink-0 w-16 h-20 sm:w-20 sm:h-28 bg-gray-100 rounded-lg overflow-hidden">
   <img
     src={
       resolveImageUrl(
@@ -443,9 +426,9 @@ export default function Checkout() {
                         )}
                       </div>
 
-                      <div>
-                              <div className="font-medium">{item?.product?.title || 'Unnamed product'}</div>
-                              <div className="text-sm text-gray-600">{(item?.variant?.name || item?.variant?.color || '') + ' × ' + (item?.quantity || 0)}</div>
+                      <div className="flex-1 min-w-0">
+                              <div className="font-medium text-sm sm:text-base truncate">{item?.product?.title || 'Unnamed product'}</div>
+                              <div className="text-xs sm:text-sm text-gray-600">{(item?.variant?.name || item?.variant?.color || '') + ' × ' + (item?.quantity || 0)}</div>
                               {String(item?.product?._id || '').startsWith('custom_') && (
                                 <div className="mt-1">
                                   <button onClick={() => {
@@ -463,7 +446,7 @@ export default function Checkout() {
                               )}
                       </div>
                     </div>
-                    <div className="font-medium">{formatPrice((item?.variant?.price || 0) * (item?.quantity || 0))}</div>
+                    <div className="font-medium text-sm sm:text-base flex-shrink-0">{formatPrice((item?.variant?.price || 0) * (item?.quantity || 0))}</div>
                   </div>
                 ))
               ) : (
@@ -472,8 +455,8 @@ export default function Checkout() {
             </div>
 
             <div className="pt-2 border-t">
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Subtotal</span>
+              <div className="flex justify-between text-sm sm:text-base">
+                <span className="text-gray-600">Subtotal</span>
                 <span className="font-medium">{formatPrice(total)}</span>
               </div>
             </div>
@@ -481,13 +464,46 @@ export default function Checkout() {
             <div>
               <label className="block text-sm font-medium mb-2">Payment Method</label>
               <div className="space-y-2">
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="pm" checked={paymentMethod === 'razorpay'} onChange={() => setPaymentMethod('razorpay')} />
-                  <span>Pay with Razorpay</span>
+                <label className="flex items-center gap-2 cursor-pointer p-2 sm:p-3 border rounded-lg hover:bg-gray-50 transition">
+                  <input type="radio" name="pm" checked={paymentMethod === 'razorpay'} onChange={() => setPaymentMethod('razorpay')} className="flex-shrink-0" />
+                  <span className="flex-1 text-sm sm:text-base">Pay Online (Razorpay)</span>
+                  <span className="text-xs text-gray-500 hidden sm:inline">Cards, UPI, Wallets</span>
                 </label>
-               
-                
+                <label className="flex items-center gap-2 cursor-pointer p-2 sm:p-3 border rounded-lg hover:bg-gray-50 transition">
+                  <input type="radio" name="pm" checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} className="flex-shrink-0" />
+                  <span className="flex-1 text-sm sm:text-base">Cash on Delivery</span>
+                  <span className="text-xs text-gray-500 hidden sm:inline">Pay when delivered</span>
+                </label>
               </div>
+              
+              {paymentMethod === 'cod' && (
+                <div className="mt-3 p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                      <span className="text-lg sm:text-xl">💵</span>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-amber-900 mb-1 text-sm sm:text-base">Cash on Delivery</h4>
+                      <p className="text-xs sm:text-sm text-amber-800 mb-2">Pay with cash when your order arrives at your doorstep.</p>
+                      <ul className="text-xs text-amber-700 space-y-1">
+                        <li className="flex items-center gap-2">
+                          <span className="w-1 h-1 bg-amber-600 rounded-full"></span>
+                          <span>No advance payment required</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="w-1 h-1 bg-amber-600 rounded-full"></span>
+                          <span>Pay exact amount to delivery person</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="w-1 h-1 bg-amber-600 rounded-full"></span>
+                          <span>Order total: {formatPrice(total)}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {paymentMethod === 'upi' && (
                 <div className="mt-2 space-y-4">
                   <div>
@@ -569,16 +585,23 @@ export default function Checkout() {
               <button
                 onClick={handlePlaceOrder}
                 disabled={loading}
-                className="w-full bg-primary-600 text-white py-2 px-4 rounded hover:bg-primary-700 disabled:opacity-50"
+                className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg hover:bg-primary-700 disabled:opacity-50 font-medium text-sm sm:text-base transition-colors"
               >
                 {loading
                   ? 'Processing…'
-                  : paymentMethod === 'razorpay'
-                    ? 'Pay & Place Order'
-                    : paymentMethod === 'upi'
-                      ? `Pay via ${currentUpiApp?.label || 'UPI'}`
-                      : 'Place Order (COD)'}
+                  : paymentMethod === 'cod'
+                    ? 'Place Order (COD)'
+                    : paymentMethod === 'razorpay'
+                      ? 'Pay & Place Order'
+                      : paymentMethod === 'upi'
+                        ? `Pay via ${currentUpiApp?.label || 'UPI'}`
+                        : 'Place Order'}
               </button>
+              {paymentMethod === 'cod' && (
+                <p className="text-xs text-gray-500 mt-2 text-center">
+                  You will pay in cash when your order is delivered
+                </p>
+              )}
             </div>
           </div>
         </aside>

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchWishlist, selectWishlistItems, selectWishlistLoading } from '../redux/slices/wishlistSlice';
 import ProductCard from '../components/ProductCard';
 import Loader from '../components/Loader';
+import SEO from '../components/SEO';
+import { Helmet } from 'react-helmet-async';
 
 const Wishlist = () => {
   const dispatch = useDispatch();
@@ -16,7 +18,16 @@ const Wishlist = () => {
   if (loading) return <div className="min-h-screen flex items-center justify-center"><Loader /></div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <SEO
+        title="My Wishlist | Mobile Covers"
+        description="View your saved mobile covers and phone cases"
+        url="/wishlist"
+      />
+      <div className="min-h-screen bg-gray-50 py-10">
       <div className="max-w-7xl mx-auto px-4">
         <h1 className="text-2xl font-bold mb-6">My Wishlist</h1>
 
@@ -33,6 +44,7 @@ const Wishlist = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

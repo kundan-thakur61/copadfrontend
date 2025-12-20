@@ -6,6 +6,7 @@ import { FiShoppingCart, FiZap, FiShield, FiTruck } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard';
 import Loader, { CardSkeleton } from '../components/Loader';
 import ThemeShowcase from '../components/ThemeShowcase';
+import SEO from '../components/SEO';
 import mainBackground from '../assets/main-background.png';
 import Customised  from '../assets/Customised-theam[1].png';
 const Home = () => {
@@ -17,8 +18,27 @@ const Home = () => {
     dispatch(fetchTrendingProducts({ limit: 8 }));
   }, [dispatch]);
 
-  return (
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Custom Mobile Covers",
+    "url": "https://yourdomain.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://yourdomain.com/products?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
 
+  return (
+    <>
+      <SEO
+        title="Custom Mobile Covers - Design Your Own Phone Case | Premium Quality"
+        description="Create personalized mobile covers with our easy-to-use design tool. Premium quality phone cases for all models. Fast shipping across India."
+        keywords="mobile covers, custom phone cases, personalized mobile covers, phone case design, premium mobile covers, buy mobile covers online"
+        url="/"
+        schema={schema}
+      />
 
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -205,6 +225,7 @@ const Home = () => {
 
 
     </div>
+    </>
   );
 };
 

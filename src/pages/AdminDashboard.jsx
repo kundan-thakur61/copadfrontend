@@ -100,14 +100,14 @@ export default function AdminDashboard() {
     );
 
   return (
-    <div className="p-6">
+    <div className="p-3 sm:p-6 min-h-screen bg-gray-50">
       <AdminImageUpload />
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-        <div className="space-x-2">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
+        <h1 className="text-xl sm:text-2xl font-bold">Admin Dashboard</h1>
+        <div className="w-full sm:w-auto">
           <button
             onClick={fetchOverview}
-            className="px-4 py-2 bg-gray-100 border rounded hover:bg-gray-200"
+            className="w-full sm:w-auto px-4 py-2 bg-gray-100 border rounded hover:bg-gray-200 text-sm"
           >
             Refresh
           </button>
@@ -116,93 +116,96 @@ export default function AdminDashboard() {
 
       <div className="lg:flex lg:items-start lg:gap-6">
         {/* Sidebar for large screens */}
-        <div className="hidden lg:block lg:w-64">
+        <div className="hidden lg:block lg:w-64 flex-shrink-0">
           <AdminSidebar />
         </div>
 
         {/* Main content */}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           {/* For small screens show a compact horizontal nav */}
-          <div className="lg:hidden mb-4">
-            <div className="overflow-x-auto">
-              <div className="flex items-center gap-2">
-                <AdminSidebar className="flex-shrink-0 w-full" />
-              </div>
-            </div>
+          <div className="lg:hidden mb-4 overflow-x-auto">
+            <AdminSidebar />
           </div>
 
           {/* Overview cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white shadow rounded-lg p-4">
-              <div className="text-sm text-gray-500">Total Revenue</div>
-              <div className="mt-2 text-2xl font-semibold">₹{Number(overview.totalRevenue || 0).toLocaleString()}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+            <div className="bg-white shadow rounded-lg p-3 sm:p-4">
+              <div className="text-xs sm:text-sm text-gray-500">Total Revenue</div>
+              <div className="mt-2 text-xl sm:text-2xl font-semibold">₹{Number(overview.totalRevenue || 0).toLocaleString()}</div>
               <div className="text-xs text-gray-400 mt-1">Store: ₹{Number(overview.storeRevenue || 0).toLocaleString()} • Custom: ₹{Number(overview.customRevenue || 0).toLocaleString()}</div>
             </div>
 
-            <div className="bg-white shadow rounded-lg p-4">
-              <div className="text-sm text-gray-500">Total Users</div>
-              <div className="mt-2 text-2xl font-semibold">{overview.totalUsers || 0}</div>
-              <div className="text-xs text-gray-400 mt-1">Active: {overview.activeUsers || 0} • New this month: {overview.newUsersThisMonth || 0}</div>
+            <div className="bg-white shadow rounded-lg p-3 sm:p-4">
+              <div className="text-xs sm:text-sm text-gray-500">Total Users</div>
+              <div className="mt-2 text-xl sm:text-2xl font-semibold">{overview.totalUsers || 0}</div>
+              <div className="text-xs text-gray-400 mt-1">Active: {overview.activeUsers || 0} • New: {overview.newUsersThisMonth || 0}</div>
             </div>
 
-            <div className="bg-white shadow rounded-lg p-4">
-              <div className="text-sm text-gray-500">Orders</div>
-              <div className="mt-2 text-2xl font-semibold">{overview.totalOrders || 0}</div>
+            <div className="bg-white shadow rounded-lg p-3 sm:p-4">
+              <div className="text-xs sm:text-sm text-gray-500">Orders</div>
+              <div className="mt-2 text-xl sm:text-2xl font-semibold">{overview.totalOrders || 0}</div>
               <div className="text-xs text-gray-400 mt-1">Pending: {overview.pendingOrders || 0} • Delivered: {overview.deliveredOrders || 0}</div>
             </div>
 
-            <div className="bg-white shadow rounded-lg p-4">
-              <div className="text-sm text-gray-500">Custom Orders</div>
-              <div className="mt-2 text-2xl font-semibold">{overview.totalCustomOrders || 0}</div>
+            <div className="bg-white shadow rounded-lg p-3 sm:p-4">
+              <div className="text-xs sm:text-sm text-gray-500">Custom Orders</div>
+              <div className="mt-2 text-xl sm:text-2xl font-semibold">{overview.totalCustomOrders || 0}</div>
               <div className="text-xs text-gray-400 mt-1">Pending: {overview.pendingCustomOrders || 0}</div>
             </div>
           </div>
 
           {/* Recent Orders */}
           <div className="bg-white shadow rounded-lg overflow-hidden">
-            <div className="px-6 py-4 border-b flex items-center justify-between">
-              <h2 className="text-lg font-medium">Recent Orders</h2>
-              <span className="text-sm text-gray-500">Showing latest {recentOrders.length}</span>
+            <div className="px-3 sm:px-6 py-3 sm:py-4 border-b flex items-center justify-between">
+              <h2 className="text-base sm:text-lg font-medium">Recent Orders</h2>
+              <span className="text-xs sm:text-sm text-gray-500">Latest {recentOrders.length}</span>
             </div>
-            <div className="p-4">
+            <div className="p-2 sm:p-4">
               {recentOrders.length === 0 ? (
-                <div className="text-gray-500">No recent orders</div>
+                <div className="text-gray-500 text-sm p-4">No recent orders</div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="min-w-full text-sm">
+                <div className="overflow-x-auto -mx-2 sm:mx-0">
+                  <table className="min-w-full text-xs sm:text-sm">
                     <thead>
                       <tr className="text-left text-xs text-gray-500 uppercase">
-                        <th className="px-3 py-2">Image</th>
-                        <th className="px-3 py-2">Order</th>
-                        <th className="px-3 py-2">Customer</th>
-                        <th className="px-3 py-2">Amount</th>
-                        <th className="px-3 py-2">Payment</th>
-                        <th className="px-3 py-2">Status</th>
-                        <th className="px-3 py-2">Date</th>
+                        <th className="px-2 sm:px-3 py-2">Image</th>
+                        <th className="px-2 sm:px-3 py-2">Order</th>
+                        <th className="px-2 sm:px-3 py-2 hidden sm:table-cell">Customer</th>
+                        <th className="px-2 sm:px-3 py-2">Amount</th>
+                        <th className="px-2 sm:px-3 py-2 hidden md:table-cell">Payment</th>
+                        <th className="px-2 sm:px-3 py-2">Status</th>
+                        <th className="px-2 sm:px-3 py-2 hidden lg:table-cell">Date</th>
                       </tr>
                     </thead>
                     <tbody>
                       {recentOrders.map((o) => (
-                        <tr key={o.id || o._id} className="border-b last:border-b-0">
-                          <td className="px-3 py-3">
+                        <tr key={o.id || o._id} className="border-b last:border-b-0 hover:bg-gray-50">
+                          <td className="px-2 sm:px-3 py-3">
                             {o.imageUrl && (
-                              <img src={resolveImageUrl(o.imageUrl)} alt="Order" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 6 }} />
+                              <img src={resolveImageUrl(o.imageUrl)} alt="Order" className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded" />
                             ) || (
-                              <span className="text-gray-400">No image</span>
+                              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-xs">N/A</div>
                             )}
                           </td>
-                          <td className="px-3 py-3 font-medium">{o.orderNumber || `ORD-${o.id?.toString?.().slice(-8).toUpperCase()}`}</td>
-                          <td className="px-3 py-3">{o.customerName || o.customerEmail || 'Guest'}</td>
-                          <td className="px-3 py-3">₹{Number(o.total || 0).toLocaleString()}</td>
-                          <td className="px-3 py-3">{o.paymentStatus || (o.payment && o.payment.status) || '--'}</td>
-                          <td className="px-3 py-3">
-                            <span className={`px-2 py-1 text-xs rounded ${
+                          <td className="px-2 sm:px-3 py-3 font-medium text-xs sm:text-sm">{o.orderNumber || `ORD-${o.id?.toString?.().slice(-8).toUpperCase()}`}</td>
+                          <td className="px-2 sm:px-3 py-3 hidden sm:table-cell text-xs sm:text-sm truncate max-w-[120px]">{o.customerName || o.customerEmail || 'Guest'}</td>
+                          <td className="px-2 sm:px-3 py-3 text-xs sm:text-sm">₹{Number(o.total || 0).toLocaleString()}</td>
+                          <td className="px-2 sm:px-3 py-3 hidden md:table-cell">
+                            <div className="flex flex-col gap-1">
+                              <span className="text-xs">{o.paymentStatus || (o.payment && o.payment.status) || '--'}</span>
+                              {o.payment?.method === 'cod' && (
+                                <span className="px-2 py-0.5 text-xs bg-amber-100 text-amber-800 rounded w-fit">COD</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-2 sm:px-3 py-3">
+                            <span className={`px-2 py-1 text-xs rounded whitespace-nowrap ${
                               o.status === 'delivered' ? 'bg-green-100 text-green-800' : o.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'
                             }`}>
                               {o.status}
                             </span>
                           </td>
-                          <td className="px-3 py-3 text-gray-500 text-xs">{new Date(o.createdAt).toLocaleString()}</td>
+                          <td className="px-2 sm:px-3 py-3 text-gray-500 text-xs hidden lg:table-cell">{new Date(o.createdAt).toLocaleDateString()}</td>
                         </tr>
                       ))}
                     </tbody>
