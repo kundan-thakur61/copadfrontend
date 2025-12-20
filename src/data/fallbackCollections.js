@@ -1,10 +1,14 @@
-import ONE from '../assets/ONE.png';
-import TWO from '../assets/TWO.png';
-import THREE from '../assets/THREE.png';
-import FOUR from '../assets/FOUR.png';
-import FIVE from '../assets/FIVE.png';
-import SIX from '../assets/SIX.png';
-import SEVEN from '../assets/SEVEN.png';
+/* src/data/fallbackCollections.js */
+
+// Cloudinary Image Constants
+const ONE = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168130/ONE_oqh54x.png";
+const TWO = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168143/TWO_ityxix.png";
+const THREE = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168160/THREE_fxoaqs.png";
+const FOUR = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168171/FOUR_vghqqp.png";
+const FIVE = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168181/FIVE_eooagl.png";
+const SIX = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168202/SIX_uoyurd.png";
+const SEVEN = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168213/SEVEN_vsgtno.png";
+
 
 const slugify = (value = '') => value
   .toString()
