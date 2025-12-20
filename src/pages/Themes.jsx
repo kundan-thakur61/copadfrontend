@@ -49,36 +49,43 @@ const Themes = () => {
 
   /* Build cards */
   const cards = useMemo(() => {
-    if (!collections.length) return FALLBACK_CARDS;
 
-    const primaryCards = collections.map((item, idx) => {
-      const heroCandidate = typeof item?.heroImage === 'string' ? item.heroImage : item?.heroImage?.url;
-      const hero = resolveImageUrl(heroCandidate);
-      const fallback = FALLBACK_CARDS[idx % FALLBACK_CARDS.length];
-      return {
-        id: item._id || `${item.handle || `c-${idx}`}`,
-        handle: item.handle || item._id || fallback?.handle || `${idx}`,
-        title: item.title || fallback?.title || 'Untitled',
-        image: hero || fallback?.image,
-        accent: item.accentColor || fallback?.accent || DEFAULT_ACCENT,
-        tagline: item.tagline || fallback?.tagline || DEFAULT_TAGLINE,
-        isFallback: false,
-      };
-    });
+    return FALLBACK_CARDS;
 
-    const seenHandles = new Set(
-      primaryCards.map((card) => (card.handle || '').toString().toLowerCase())
-    );
 
-    const fillerCards = FALLBACK_CARDS.filter(
-      (fallback) => !seenHandles.has((fallback.handle || '').toLowerCase())
-    ).map((fallback, index) => ({
-      ...fallback,
-      id: fallback.id || `${fallback.handle || 'fallback'}-${index}`,
-      isFallback: true,
-    }));
+    // if (!collections.length) return FALLBACK_CARDS;
+    
 
-    return [...primaryCards, ...fillerCards];
+    // const primaryCards = collections.map((item, idx) =>
+    // {
+
+    //   const heroCandidate = typeof item?.heroImage === 'string' ? item.heroImage : item?.heroImage?.url;
+    //   const hero = resolveImageUrl(heroCandidate);
+    //   const fallback = FALLBACK_CARDS[idx % FALLBACK_CARDS.length];
+    //   return {
+    //     id: item._id || `${item.handle || `c-${idx}`}`,
+    //     handle: item.handle || item._id || fallback?.handle || `${idx}`,
+    //     title: item.title || fallback?.title || 'Untitled',
+    //     image: hero || fallback?.image,
+    //     accent: item.accentColor || fallback?.accent || DEFAULT_ACCENT,
+    //     tagline: item.tagline || fallback?.tagline || DEFAULT_TAGLINE,
+    //     isFallback: false,
+    //   };
+    // });
+
+    // const seenHandles = new Set(
+    //   primaryCards.map((card) => (card.handle || '').toString().toLowerCase())
+    // );
+
+    // const fillerCards = FALLBACK_CARDS.filter(
+    //   (fallback) => !seenHandles.has((fallback.handle || '').toLowerCase())
+    // ).map((fallback, index) => ({
+    //   ...fallback,
+    //   id: fallback.id || `${fallback.handle || 'fallback'}-${index}`,
+    //   isFallback: true,
+    // }));
+
+    // return [...primaryCards, ...fillerCards];
   }, [collections]);
 
   const handleImgError = (e) => {
