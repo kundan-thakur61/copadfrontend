@@ -229,7 +229,8 @@ export default function Checkout() {
               });
               dispatch(clearCart());
               toast.success('Payment successful');
-              navigate(`/order-success/${order._id}`);
+              // navigate(`/order-success/${order._id}`);
+              window.location.href = `/order-success/${order._id}`;
             } catch (err) {
               toast.error(err.response?.data?.message || 'Payment verification failed');
             }
@@ -256,7 +257,8 @@ export default function Checkout() {
         // COD or other non-online
         dispatch(clearCart());
         toast.success('Order placed successfully');
-        navigate(`/order-success/${order._id}`);
+        // navigate(`/order-success/${order._id}`);
+         window.location.href = `/order-success/${order._id}`;
       }
     } catch (err) {
       toast.error(err.response?.data?.message || err.message || 'Failed to place order');
