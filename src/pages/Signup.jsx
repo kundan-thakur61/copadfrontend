@@ -26,7 +26,13 @@ const Signup = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectUrl = urlParams.get('redirect');
+      if (redirectUrl) {
+        navigate(decodeURIComponent(redirectUrl));
+      } else {
+        navigate('/');
+      }
     }
     return () => {
       dispatch(clearError());

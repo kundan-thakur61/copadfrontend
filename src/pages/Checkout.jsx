@@ -106,7 +106,8 @@ export default function Checkout() {
     // Require user to be authenticated before placing an order
     if (!user) {
       toast.error('Please log in to place an order');
-      navigate('/login');
+      const redirectUrl = encodeURIComponent(window.location.pathname + window.location.search);
+      navigate(`/login?redirect=${redirectUrl}`);
       return;
     }
 

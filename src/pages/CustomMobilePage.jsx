@@ -31,7 +31,7 @@ const MATERIAL_OPTIONS = [
     label: 'Glossy Metal',
     subtitle: 'metal finish Smooth shiny look Strong & durable',
     price: 1,
-    originalPrice: 399,
+    originalPrice: 2,
     
   },
   {
@@ -39,7 +39,7 @@ const MATERIAL_OPTIONS = [
     label: 'Glossy Metal + Gel',
     subtitle: 'Transparent layer Extra shine Design  premium',
     price: 1.5,
-    originalPrice: 449,
+    originalPrice: 3,
     
   },
 
@@ -435,7 +435,8 @@ const CustomMobilePage = () => {
   const handleSubmit = async (action) => {
     if (!isAuthenticated) {
       toast.error('Please log in to continue');
-      navigate('/login');
+      const redirectUrl = encodeURIComponent(window.location.pathname + window.location.search);
+      navigate(`/login?redirect=${redirectUrl}`);
       return;
     }
     if (!selectedCompany) {
