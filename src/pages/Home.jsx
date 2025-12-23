@@ -21,11 +21,11 @@ const Home = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Custom Mobile Covers",
-    "url": "https://www.coverghar.com",
+    "name": "Cover Ghar",
+    "url": "https://www.coverghar.in",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://www.coverghar.com/products?search={search_term_string}",
+      "target": "https://www.coverghar.in/products?search={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };

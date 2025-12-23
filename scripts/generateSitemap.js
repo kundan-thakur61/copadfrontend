@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SITE_URL = process.env.VITE_SITE_URL || 'https://yourdomain.com';
+const SITE_URL = process.env.VITE_SITE_URL || 'https://www.coverghar.in';
 
 const staticRoutes = [
   { url: '/', changefreq: 'daily', priority: '1.0' },

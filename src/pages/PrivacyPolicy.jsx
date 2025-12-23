@@ -1,13 +1,24 @@
-import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
 const PrivacyPolicy = () => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Privacy Policy | Cover Ghar",
+    "url": "https://www.coverghar.in/privacy-policy",
+    "description": "Read our privacy policy to understand how we collect, use, and protect your personal information.",
+    "dateModified": "2025-12-23",
+    "inLanguage": "en"
+  };
+
   return (
     <>
       <SEO
         title="Privacy Policy | Cover Ghar"
         description="Read our privacy policy to understand how we collect, use, and protect your personal information."
         url="/privacy-policy"
+        type="article"
+        schema={schema}
       />
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
         <div>

@@ -1,16 +1,16 @@
-import { Helmet } from 'react-helmet-async';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet-async';
 
 const SEO = ({
-  title = 'Custom Mobile Covers - Design Your Own Phone Case',
-  description = 'Create personalized mobile covers with our easy-to-use design tool. Premium quality phone cases for all models. Fast shipping across India.',
-  keywords = 'mobile covers, custom phone cases, personalized mobile covers, phone case design, premium mobile covers',
+  title = 'Cover Ghar | Custom Mobile Covers - Design Your Own Phone Case',
+  description = 'Design personalized mobile covers with premium materials. Fast shipping across India from Cover Ghar.',
+  keywords = 'cover ghar, mobile covers, custom phone cases, personalized mobile covers, phone case design, premium mobile covers',
   image = '/mobile-covers-banner.png',
   url = '',
   type = 'website',
   schema = null
 }) => {
-  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://yourdomain.com';
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://www.coverghar.in';
   const fullUrl = url ? `${siteUrl}${url}` : siteUrl;
   const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
@@ -25,7 +25,7 @@ const SEO = ({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={fullImage} />
       <meta property="og:url" content={fullUrl} />
-      <meta property="og:site_name" content="Custom Mobile Covers" />
+      <meta property="og:site_name" content="Cover Ghar" />
       
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />

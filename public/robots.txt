@@ -11,4 +11,4 @@ Disallow: /custom-designs
 Disallow: /login
 Disallow: /signup
 
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://www.coverghar.in/sitemap.xml
