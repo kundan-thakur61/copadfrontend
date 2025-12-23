@@ -272,92 +272,7 @@ export default function Checkout() {
       <h2 className="text-xl sm:text-2xl font-semibold mb-4">Checkout</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        {/* Shipping Form */}
-        <div className="lg:col-span-2 bg-white rounded-lg p-3 sm:p-4 shadow-sm border order-2 lg:order-1">
-          <h3 className="text-base sm:text-lg font-medium mb-3">Shipping Information</h3>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label className="block text-sm">Full name</label>
-              <input
-                value={shipping.name}
-                onChange={(e) => setShipping((s) => ({ ...s, name: e.target.value }))}
-                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.name ? 'border-red-400' : 'border-gray-300'}`}
-              />
-              {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
-            </div>
-
-            <div>
-              <label className="block text-sm">Phone</label>
-              <input
-                value={shipping.phone}
-                onChange={(e) => setShipping((s) => ({ ...s, phone: e.target.value }))}
-                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.phone ? 'border-red-400' : 'border-gray-300'}`}
-              />
-              {errors.phone && <p className="text-xs text-red-600 mt-1">{errors.phone}</p>}
-            </div>
-
-            <div className="sm:col-span-2">
-              <label className="block text-sm">Address</label>
-              <input
-                value={shipping.address1}
-                onChange={(e) => setShipping((s) => ({ ...s, address1: e.target.value }))}
-                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.address1 ? 'border-red-400' : 'border-gray-300'}`}
-                placeholder="Street address, P.O. box, company name, c/o"
-              />
-              {errors.address1 && <p className="text-xs text-red-600 mt-1">{errors.address1}</p>}
-            </div>
-
-            <div className="sm:col-span-2">
-              <label className="block text-sm">Address line 2 (optional)</label>
-              <input
-                value={shipping.address2}
-                onChange={(e) => setShipping((s) => ({ ...s, address2: e.target.value }))}
-                className="mt-1 block w-full border rounded px-3 py-2 border-gray-300"
-                placeholder="Apartment, suite, unit, building, floor, etc."
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm">City</label>
-              <input
-                value={shipping.city}
-                onChange={(e) => setShipping((s) => ({ ...s, city: e.target.value }))}
-                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.city ? 'border-red-400' : 'border-gray-300'}`}
-              />
-              {errors.city && <p className="text-xs text-red-600 mt-1">{errors.city}</p>}
-            </div>
-
-            <div>
-              <label className="block text-sm">State / Region</label>
-              <input
-                value={shipping.state}
-                onChange={(e) => setShipping((s) => ({ ...s, state: e.target.value }))}
-                className="mt-1 block w-full border rounded px-3 py-2 border-gray-300"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm">Postal code</label>
-              <input
-                value={shipping.postalCode}
-                onChange={(e) => setShipping((s) => ({ ...s, postalCode: e.target.value }))}
-                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.postalCode ? 'border-red-400' : 'border-gray-300'}`}
-              />
-              {errors.postalCode && <p className="text-xs text-red-600 mt-1">{errors.postalCode}</p>}
-            </div>
-
-            <div>
-              <label className="block text-sm">Country</label>
-              <input
-                value={shipping.country}
-                onChange={(e) => setShipping((s) => ({ ...s, country: e.target.value }))}
-                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.country ? 'border-red-400' : 'border-gray-300'}`}
-              />
-              {errors.country && <p className="text-xs text-red-600 mt-1">{errors.country}</p>}
-            </div>
-          </div>
-        </div>
+        
 
         {/* Order Summary */}
         <aside className="bg-white rounded-lg p-3 sm:p-4 shadow-sm border sticky top-4 order-1 lg:order-2">
@@ -456,12 +371,105 @@ export default function Checkout() {
               )}
             </div>
 
+
+
+
+
+        {/* Shipping Form */}
+        <div className="lg:col-span-2 bg-white rounded-lg p-3 sm:p-4 shadow-sm border order-2 lg:order-1">
+          <h3 className="text-base sm:text-lg font-medium mb-3">Shipping Information</h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm">Full name</label>
+              <input
+                value={shipping.name}
+                onChange={(e) => setShipping((s) => ({ ...s, name: e.target.value }))}
+                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.name ? 'border-red-400' : 'border-gray-300'}`}
+              />
+              {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
+            </div>
+
+            <div>
+              <label className="block text-sm">Phone</label>
+              <input
+                value={shipping.phone}
+                onChange={(e) => setShipping((s) => ({ ...s, phone: e.target.value }))}
+                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.phone ? 'border-red-400' : 'border-gray-300'}`}
+              />
+              {errors.phone && <p className="text-xs text-red-600 mt-1">{errors.phone}</p>}
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-sm">Address</label>
+              <input
+                value={shipping.address1}
+                onChange={(e) => setShipping((s) => ({ ...s, address1: e.target.value }))}
+                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.address1 ? 'border-red-400' : 'border-gray-300'}`}
+                placeholder="Street address, P.O. box, company name, c/o"
+              />
+              {errors.address1 && <p className="text-xs text-red-600 mt-1">{errors.address1}</p>}
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-sm">Address line 2 (optional)</label>
+              <input
+                value={shipping.address2}
+                onChange={(e) => setShipping((s) => ({ ...s, address2: e.target.value }))}
+                className="mt-1 block w-full border rounded px-3 py-2 border-gray-300"
+                placeholder="Apartment, suite, unit, building, floor, etc."
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm">City</label>
+              <input
+                value={shipping.city}
+                onChange={(e) => setShipping((s) => ({ ...s, city: e.target.value }))}
+                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.city ? 'border-red-400' : 'border-gray-300'}`}
+              />
+              {errors.city && <p className="text-xs text-red-600 mt-1">{errors.city}</p>}
+            </div>
+
+            <div>
+              <label className="block text-sm">State / Region</label>
+              <input
+                value={shipping.state}
+                onChange={(e) => setShipping((s) => ({ ...s, state: e.target.value }))}
+                className="mt-1 block w-full border rounded px-3 py-2 border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm">Postal code</label>
+              <input
+                value={shipping.postalCode}
+                onChange={(e) => setShipping((s) => ({ ...s, postalCode: e.target.value }))}
+                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.postalCode ? 'border-red-400' : 'border-gray-300'}`}
+              />
+              {errors.postalCode && <p className="text-xs text-red-600 mt-1">{errors.postalCode}</p>}
+            </div>
+
+            <div>
+              <label className="block text-sm">Country</label>
+              <input
+                value={shipping.country}
+                onChange={(e) => setShipping((s) => ({ ...s, country: e.target.value }))}
+                className={`mt-1 block w-full border rounded px-3 py-2 ${errors.country ? 'border-red-400' : 'border-gray-300'}`}
+              />
+              {errors.country && <p className="text-xs text-red-600 mt-1">{errors.country}</p>}
+            </div>
+          </div>
+        </div>
+        {/* end */}
             <div className="pt-2 border-t">
               <div className="flex justify-between text-sm sm:text-base">
                 <span className="text-gray-600">Subtotal</span>
                 <span className="font-medium">{formatPrice(total)}</span>
               </div>
             </div>
+
+            
 
             <div>
               <label className="block text-sm font-medium mb-2">Payment Method</label>
@@ -471,11 +479,11 @@ export default function Checkout() {
                   <span className="flex-1 text-sm sm:text-base">Pay Online (Razorpay)</span>
                   <span className="text-xs text-gray-500 hidden sm:inline">Cards, UPI, Wallets</span>
                 </label>
-                <label className="flex items-center gap-2 cursor-pointer p-2 sm:p-3 border rounded-lg hover:bg-gray-50 transition">
-                  <input type="radio" name="pm" checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} className="flex-shrink-0" />
+                {/* <label   className="flex items-center gap-2 cursor-pointer p-2 sm:p-3 border rounded-lg hover:bg-gray-50 transition">
+                  <input type="radio" name="pm"  checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} className="flex-shrink-0" />
                   <span className="flex-1 text-sm sm:text-base">Cash on Delivery</span>
                   <span className="text-xs text-gray-500 hidden sm:inline">Pay when delivered</span>
-                </label>
+                </label> */}
               </div>
               
               {paymentMethod === 'cod' && (

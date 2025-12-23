@@ -7,8 +7,8 @@ import ProductCard from '../components/ProductCard';
 import Loader, { CardSkeleton } from '../components/Loader';
 import ThemeShowcase from '../components/ThemeShowcase';
 import SEO from '../components/SEO';
-import mainBackground from '../assets/main-background.png';
-import Customised  from '../assets/Customised-theam[1].png';
+// import mainBackground from '../assets/main-background.png';
+// import Customised  from '../assets/Customised-theam[1].png';
 const Home = () => {
   const dispatch = useDispatch();
   // const { loading } = useSelector((state) => state.products);
@@ -22,10 +22,10 @@ const Home = () => {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Custom Mobile Covers",
-    "url": "https://yourdomain.com",
+    "url": "https://www.coverghar.com",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://yourdomain.com/products?search={search_term_string}",
+      "target": "https://www.coverghar.com/products?search={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -39,6 +39,7 @@ const Home = () => {
         url="/"
         schema={schema}
       />
+
 
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -75,9 +76,9 @@ const Home = () => {
         to="/themes"
         className="block rounded-xl overflow-hidden "
       >
-        <img
-          src={mainBackground}
-          alt="Mobile Covers"
+         <img
+                src="https://res.cloudinary.com/dwmytphop/image/upload/v1766311084/main_background_theame_ni9f5a.png"
+                alt="Cover Ghar"
           className="w-full h-auto object-contain"
         />
       </Link>
@@ -87,9 +88,9 @@ const Home = () => {
         to="/customizer"
         className="block rounded-xl overflow-hidden "
       >
-        <img
-          src={Customised}
-          alt="Customised Cover"
+         <img
+                src="https://res.cloudinary.com/dwmytphop/image/upload/v1766311082/Customised_theam_ghg4jm.png"
+                alt="Cover Ghar"
           className="w-full h-auto object-contain"
         />
       </Link>
@@ -101,7 +102,17 @@ const Home = () => {
 
        
      
-      
+      {/*   
+      <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
+              <img
+                src="https://res.cloudinary.com/dwmytphop/image/upload/v1766394899/ChatGPT_Image_Dec_22_2025_09_54_27_AM_sxuryi.png"
+                alt="Cover Ghar"
+                className="w-8 h-8 rounded-lg"
+              />
+              <span className="text-lg sm:text-xl font-bold text-gray-900">
+                COVER GHAR
+              </span>
+            </Link> */}
   
 
       {/* Featured Products */}

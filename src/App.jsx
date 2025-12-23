@@ -37,6 +37,12 @@ import ThemeDetail from './pages/ThemeDetail';
 import Collection from './pages/collection.jsx';
 import GalleryImagePage from './pages/GalleryImagePage.jsx';
 
+// Support
+import  ShippingPolicy from './pages/ShippingPolicy.jsx'
+import  ReturnsAndRefunds from './pages/ReturnsAndRefunds.jsx'
+import  PrivacyPolicy from './pages/PrivacyPolicy.jsx'
+import  TermsConditions from './pages/TermsConditions.jsx'
+
 
 
 
@@ -125,7 +131,14 @@ function App() {
         { path: 'collection/:handle', element: <Collection /> },
         { path: 'collection/:handle/gallery', element: <GalleryImagePage /> },
 
-        
+        // Support
+            { path: 'ShippingPolicy', element: <ShippingPolicy /> },
+            { path: 'ReturnsAndRefunds', element: <ReturnsAndRefunds /> },
+            { path: 'PrivacyPolicy', element: <PrivacyPolicy /> },
+            { path: 'TermsConditions', element: <TermsConditions /> },
+
+
+
 
 
         { path: 'cart', element: <Cart /> },

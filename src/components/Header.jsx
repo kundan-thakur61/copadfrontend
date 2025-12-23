@@ -46,13 +46,17 @@ const Header = () => {
       <header className="bg-white shadow-sm border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xs sm:text-sm">CG</span>
-            </div>
-            <span className="text-base sm:text-xl font-bold text-gray-900">COVER GHAR</span>
-          </Link>
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
+              <img
+                src="https://res.cloudinary.com/dwmytphop/image/upload/v1766473299/ChatGPT_Image_Dec_23_2025_12_30_26_PM_oyeb3g.jpg"
+                alt="Cover Ghar"
+                className="w-8 h-8 rounded-lg"
+              />
+              <span className="text-lg sm:text-xl font-bold text-gray-900">
+                COVER GHAR
+              </span>
+            </Link>
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-700 hover:text-primary-600 font-medium  m-2">

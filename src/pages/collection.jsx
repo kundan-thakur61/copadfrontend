@@ -18,7 +18,7 @@ const emptyMeta = {
 };
 
 const DEFAULT_FRAME = '/frames/frame-1-fixed.svg';
-const COLLECTION_CASE_PRICE = 599;
+const COLLECTION_CASE_PRICE = 199;
 const slugifyId = (value) => {
   const parsed = String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '') || 'x';
   return parsed;
@@ -704,7 +704,7 @@ const CollectionPage = () => {
                 </div>
 
                 <div>
-                  <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Step 4</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Step 4</p>Anime Theme
                   <label className="mt-2 block text-lg font-semibold text-gray-900">Choose mobile model</label>
                   <select
                     className="mt-3 w-full rounded-2xl border border-gray-200 px-4 py-3 text-gray-900 focus:border-primary-500 focus:ring-primary-500"

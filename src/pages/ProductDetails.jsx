@@ -352,10 +352,10 @@ const ProductDetails = ({ productIdOverride }) => {
             </div>
 
             {/* Pincode Serviceability Checker */}
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
+            {/* <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
               <h3 className="text-sm font-semibold tracking-wide text-gray-500 mb-4">CHECK DELIVERY</h3>
               <PincodeChecker />
-            </div>
+            </div> */}
           </div>
         </section>
 

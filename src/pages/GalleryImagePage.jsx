@@ -10,7 +10,7 @@ import { addToCart } from '../redux/slices/cartSlice';
 import { FALLBACK_COLLECTION_MAP } from '../data/fallbackCollections';
 import { FALLBACK_MOBILE_COMPANIES } from '../data/fallbackMobileCompanies';
 
-const COLLECTION_CASE_PRICE = 299;
+// const COLLECTION_CASE_PRICE = materialOptions.find((option) => option.id === selectedMaterial)?.price || 199;
 const DEFAULT_FRAME = '/frames/frame-1-fixed.svg';
 
 const normalizeHandle = (value = '') => (
@@ -27,11 +27,23 @@ const slugifyId = (value) => {
   return parsed;
 };
 
+/* -------------------- material options -------------------- */
 const materialOptions = [
-  { id: 'matte', label: 'Glossy Metal', blurb: 'Smooth aur shiny look Strong & durable' },
-  { id: 'gloss', label: 'Glossy Metal + Gel', blurb: 'Transparent layer Extra shine Design  3D / premium protective' },
-  // { id: 'leather', label: 'Vegan Leather', blurb: 'Wrap finish with stitched rim.' },
+  {
+    id: 'matte',
+    price: 199,
+    label: 'Glossy Metal',
+    blurb: 'Smooth aur shiny look. Strong & durable',
+  },
+  {
+    id: 'gloss',
+    price: 249,
+    label: 'Glossy Metal + Gel',
+    blurb: 'Extra shine. 3D premium protection',
+  },
 ];
+
+
 
 const GalleryImagePage = () => {
   const { handle } = useParams();
@@ -51,6 +63,16 @@ const GalleryImagePage = () => {
   const [loadingCompanies, setLoadingCompanies] = useState(true);
   const [loadingModels, setLoadingModels] = useState(false);
   const [catalogError, setCatalogError] = useState('');
+
+
+
+  /* -------------------- material price -------------------- */
+  const selectedMaterialPrice = useMemo(() => {
+    return (
+      materialOptions.find((m) => m.id === selectedMaterial)?.price || 199
+    );
+  }, [selectedMaterial]);
+
 
   useEffect(() => {
     let ignore = false;
@@ -209,13 +231,14 @@ const GalleryImagePage = () => {
     };
     const variant = {
       _id: variantId,
-      price: COLLECTION_CASE_PRICE,
+      price: selectedMaterialPrice,
       stock: 50,
       color: selectedModel.color || 'Matte Black',
       name: 'Custom Print',
     };
     return { product, variant };
   };
+    
 
   const handleCartAction = (mode = 'cart') => {
     const blueprint = buildCartBlueprint();
@@ -376,7 +399,10 @@ const GalleryImagePage = () => {
                 <div>
                   <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Pricing</p>
                   <div className="flex items-baseline gap-3 mt-2">
-                    <span className="text-3xl font-semibold text-gray-900">{formatPrice(COLLECTION_CASE_PRICE)}</span>
+                  <span className="text-3xl font-semibold text-gray-900">
+                  {formatPrice(selectedMaterialPrice)}
+                  </span>
+
                     <span className="text-sm text-gray-500"></span>
                   </div>
                 </div>

@@ -1,13 +1,13 @@
 /* src/data/fallbackCollections.js */
 
 // Cloudinary Image Constants
-const ONE = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168130/ONE_oqh54x.png";
-const TWO = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168143/TWO_ityxix.png";
-const THREE = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168160/THREE_fxoaqs.png";
-const FOUR = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168171/FOUR_vghqqp.png";
-const FIVE = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168181/FIVE_eooagl.png";
-const SIX = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168202/SIX_uoyurd.png";
-const SEVEN = "https://res.cloudinary.com/dwmytphop/image/upload/v1766168213/SEVEN_vsgtno.png";
+const ONE = "https://res.cloudinary.com/dwmytphop/image/upload/v1766311083/ONE_wwadwu.png";
+const TWO = "https://res.cloudinary.com/dwmytphop/image/upload/v1766311084/TWO_w7vuj3.png";
+const THREE = "https://res.cloudinary.com/dwmytphop/image/upload/v1766311084/THREE_hhcx1t.png";
+const FOUR = "https://res.cloudinary.com/dwmytphop/image/upload/v1766311083/FOUR_x4ebda.png";
+const FIVE = "https://res.cloudinary.com/dwmytphop/image/upload/v1766311083/FIVE_g4ndly.png";
+const SIX = "https://res.cloudinary.com/dwmytphop/image/upload/v1766311083/SIX_hhibvm.png";
+const SEVEN = "https://res.cloudinary.com/dwmytphop/image/upload/v1766311084/SEVEN_g0ijic.png";
 
 
 const slugify = (value = '') => value

@@ -84,20 +84,7 @@ const Login = () => {
     }
   };
 
-  const handleDemoLogin = (type) => {
-    const demoCredentials = {
-      user: {
-        email: 'user@example.com',
-        password: 'password123',
-      },
-      admin: {
-        email: 'admin@example.com',
-        password: 'admin123',
-      },
-    };
-
-    setFormData(demoCredentials[type]);
-  };
+ 
 
   if (loading) {
     return <Loader />;
@@ -213,26 +200,7 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Demo Accounts */}
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-600 text-center mb-4">Try with demo accounts:</p>
-            <div className="space-y-2">
-              <button
-                type="button"
-                onClick={() => handleDemoLogin('user')}
-                className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
-              >
-                Demo User Account
-              </button>
-              <button
-                type="button"
-                onClick={() => handleDemoLogin('admin')}
-                className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
-              >
-                Demo Admin Account
-              </button>
-            </div>
-          </div>
+          
 
           {/* Sign Up Link */}
           <div className="mt-6 text-center">
