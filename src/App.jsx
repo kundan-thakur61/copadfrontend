@@ -131,14 +131,13 @@ function App() {
         { path: 'collection/:handle', element: <Collection /> },
         { path: 'collection/:handle/gallery', element: <GalleryImagePage /> },
 
-        // Support
-            { path: 'ShippingPolicy', element: <ShippingPolicy /> },
-            { path: 'ReturnsAndRefunds', element: <ReturnsAndRefunds /> },
-            { path: 'PrivacyPolicy', element: <PrivacyPolicy /> },
-            { path: 'TermsConditions', element: <TermsConditions /> },
+        
 
-
-
+// Support pages
+        { path: 'privacy-policy', element: <PrivacyPolicy /> },
+        { path: 'terms-conditions', element: <TermsConditions /> },
+        { path: 'returns-refunds', element: <ReturnsAndRefunds /> },
+        { path: 'shipping-policy', element: <ShippingPolicy /> },
 
 
         { path: 'cart', element: <Cart /> },

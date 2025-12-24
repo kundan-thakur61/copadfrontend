@@ -434,11 +434,11 @@ const CustomMobilePage = () => {
 
     const payload = {
       variant: {
-        name: selectedMaterial.label,
-        color: selectedMaterial.label,
-        materialId: selectedMaterial.id,
-        price: selectedMaterial.price,
-        sku: `custom-${selectedMaterial.id}`,
+        name: selectedMaterial?.label || 'Custom Case',
+        color: selectedMaterial?.label || 'Custom',
+        materialId: selectedMaterial?.id,
+        price: selectedMaterial?.price || 0,
+        sku: `custom-${selectedMaterial?.id || 'generic'}`,
       },
       quantity,
       imageUrls: [imagePreview],

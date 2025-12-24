@@ -260,11 +260,11 @@ const CollectionPage = () => {
 
   const buildCartBlueprint = () => {
     if (!collection || !selectedImage || !selectedCompany || !selectedModel) return null;
-    const baseId = slugifyId(collection._id || collection.handle || 'collection');
-    const modelKey = slugifyId(selectedModel._id || selectedModel.slug || selectedModel.name || 'model');
-    const imageKey = slugifyId(selectedImage._id || selectedImage.publicId || selectedImage.url || selectedImage.caption || 'art');
-    const productId = `custom_collection_${baseId}_${modelKey}_${imageKey}`;
-    const variantId = `${productId}_variant`;
+    const baseId = slugifyId(collection._id || collection.handle || 'collection').slice(-6);
+    const modelKey = slugifyId(selectedModel._id || selectedModel.slug || selectedModel.name || 'model').slice(-6);
+    const imageKey = slugifyId(selectedImage._id || selectedImage.publicId || selectedImage.url || selectedImage.caption || 'art').slice(-6);
+    const productId = `cc_${baseId}_${modelKey}_${imageKey}`;
+    const variantId = `${productId}_v`;
     const product = {
       _id: productId,
       title: `${collection.title} - Custom Case`,

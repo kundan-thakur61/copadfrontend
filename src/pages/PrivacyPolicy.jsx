@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
   return (
     <>
       <SEO
-        title="Privacy Policy | Cover Ghar"
+        title="Privacy Policy | mobile cover"
         description="Read our privacy policy to understand how we collect, use, and protect your personal information."
         url="/privacy-policy"
         type="article"
