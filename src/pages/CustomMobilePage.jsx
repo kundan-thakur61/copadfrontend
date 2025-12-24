@@ -2,12 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
-  FiCamera,
-  FiCheckCircle,
   FiChevronDown,
   FiImage,
   FiMinus,
-  FiPackage,
   FiPlus,
   FiShield,
   FiSmartphone,
@@ -32,7 +29,6 @@ const MATERIAL_OPTIONS = [
     subtitle: 'metal finish Smooth shiny look Strong & durable',
     price: 1,
     originalPrice: 2,
-    
   },
   {
     id: 'tempered-glass',
@@ -40,9 +36,7 @@ const MATERIAL_OPTIONS = [
     subtitle: 'Transparent layer Extra shine Design  premium',
     price: 1.5,
     originalPrice: 3,
-    
   },
-
 ];
 
 const FEATURE_HIGHLIGHTS = [
@@ -217,9 +211,9 @@ const CustomMobilePage = () => {
   const priceSummary = useMemo(() => {
     const total = (selectedMaterial?.price || 0) * quantity;
     const original = (selectedMaterial?.originalPrice || 0) * quantity;
-    const savings = original - total;
+    const savings = Math.max(original - total, 0);
     const discount = original ? Math.round((savings / original) * 100) : 0;
-    return { total, original, savings, discount: Math.max(discount, 0) };
+    return { total, original, savings, discount };
   }, [selectedMaterial, quantity]);
 
   // const selectedFrame = useMemo(() => {
@@ -340,97 +334,78 @@ const CustomMobilePage = () => {
   });
 
   const initiatePayment = async (customOrder) => {
-    try {
-      await loadRazorpayScript();
+  try {
+    await loadRazorpayScript();
 
-      const paymentResponse = await dispatch(createCustomPayment(customOrder._id)).unwrap();
-      const paymentData = paymentResponse?.data || paymentResponse;
-      const razorpayOrderId = paymentData?.razorpayOrderId || paymentData?.orderId;
-      if (!razorpayOrderId) {
-        throw new Error('Unable to initialize payment');
-      }
+    // 🔹 Backend call (backend MUST return amount in paise)
+    const paymentResponse = await dispatch(
+      createCustomPayment(customOrder._id)
+    ).unwrap();
 
-      const keyId = paymentData?.keyId || paymentData?.key || import.meta.env.VITE_RAZORPAY_KEY;
-      const amount = paymentData?.amount || Math.round((customOrder.price || selectedMaterial.price) * 100);
-      const currency = paymentData?.currency || 'INR';
+    const paymentData = paymentResponse?.data?.data || paymentResponse?.data || paymentResponse;
 
-      const options = {
-        key: keyId,
-        amount,
-        currency,
-        order_id: razorpayOrderId,
-        name: 'Copad Custom Cover',
-        description: `Custom order #${customOrder._id}`,
-        prefill: {
-          name: shipping.name,
-          contact: shipping.phone,
-        },
-        notes: {
-          customOrderId: customOrder._id,
-          brand: selectedCompany?.name,
-          model: selectedModel?.name,
-        },
-        theme: { color: '#2563eb' },
-        handler: async (response) => {
-          try {
-            await dispatch(verifyCustomPayment({
+    const razorpayOrderId = paymentData?.razorpayOrderId || paymentData?.orderId || paymentData?.id;
+    const amount = paymentData?.amount;
+
+    // 🔒 Safety check
+    if (!razorpayOrderId || !amount) {
+      console.error("Invalid payment data:", paymentData);
+      throw new Error("Invalid payment data from backend");
+    }
+
+    const options = {
+      key: paymentData.keyId || paymentData.key || import.meta.env.VITE_RAZORPAY_KEY,
+      amount: amount, // ✅ ONLY backend amount (paise)
+      currency: paymentData.currency || "INR",
+      order_id: razorpayOrderId,
+
+      name: "Copad Custom Cover",
+      description: `Custom order #${customOrder._id}`,
+
+      prefill: {
+        name: shipping.name,
+        contact: shipping.phone,
+      },
+
+      notes: {
+        customOrderId: customOrder._id,
+        brand: selectedCompany?.name,
+        model: selectedModel?.name,
+      },
+
+      theme: { color: "#2563eb" },
+
+      handler: async (response) => {
+        try {
+          await dispatch(
+            verifyCustomPayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
               customOrderId: customOrder._id,
-            })).unwrap();
-            toast.success('Payment successful! We will start printing your cover.');
-            showOrderFeedback({
-              status: 'success',
-              title: 'Payment completed',
-              message: 'Your artwork heads to printing next. Check progress in custom orders.',
-              orderId: customOrder._id,
-              ctaLabel: 'View custom orders',
-              onCta: () => navigate('/custom-orders'),
-            });
-          } catch (error) {
-            const message = error?.response?.data?.message || error?.message || 'Payment verification failed';
-            toast.error(message);
-            showOrderFeedback({
-              status: 'error',
-              title: 'Verification failed',
-              message,
-              orderId: customOrder._id,
-              ctaLabel: 'Retry payment',
-              onCta: () => handleSubmit('buy'),
-            });
-          }
-        },
-      };
+            })
+          ).unwrap();
 
-      const razorpay = new window.Razorpay(options);
-      razorpay.on('payment.failed', (resp) => {
-        const message = resp.error?.description || 'Payment failed. Please try again.';
-        toast.error(message);
-        showOrderFeedback({
-          status: 'error',
-          title: 'Payment failed',
-          message,
-          orderId: customOrder._id,
-          ctaLabel: 'Retry payment',
-          onCta: () => handleSubmit('buy'),
-        });
-      });
-      razorpay.open();
-    } catch (error) {
-      const message = error?.response?.data?.message || error?.message || 'Unable to initiate payment';
-      toast.error(message);
-      showOrderFeedback({
-        status: 'error',
-        title: 'Payment setup issue',
-        message,
-        orderId: customOrder._id,
-        ctaLabel: 'Retry payment',
-        onCta: () => handleSubmit('buy'),
-      });
-      throw error;
-    }
-  };
+          toast.success("Payment successful!");
+          navigate("/custom-orders");
+        } catch (error) {
+          toast.error("Payment verification failed");
+        }
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+
+    razorpay.on("payment.failed", (err) => {
+      toast.error(err?.error?.description || "Payment failed");
+    });
+
+    razorpay.open();
+  } catch (error) {
+    toast.error(error.message || "Unable to initiate payment");
+  }
+};
+
 
   const handleSubmit = async (action) => {
     if (!isAuthenticated) {
@@ -586,7 +561,7 @@ const CustomMobilePage = () => {
                   Start Customising
                 </button>
                 <button
-                  onClick={() => window.open('https://wa.me/7050818061', '_blank')}
+                  onClick={() => window.open('https://wa.me/9999999999', '_blank')}
                   className="bg-transparent border border-white/60 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10"
                 >
                   Chat with a Designer
@@ -943,7 +918,7 @@ const CustomMobilePage = () => {
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
             <div>
               <p className="text-sm uppercase text-gray-500">How it works</p>
-              <h2 className="text-3xl font-semibold text-gray-900">Same flow as Copad&apos;s custom mobile builder</h2>
+              <h2 className="text-3xl font-semibold text-gray-900">Same flow as Copad's custom mobile builder</h2>
               <p className="text-gray-600 mt-2">From upload to doorstep delivery, we maintain the same handcrafted pipeline for every single order.</p>
             </div>
             <div className="bg-primary-50 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold">Average delivery: 3.2 days</div>
