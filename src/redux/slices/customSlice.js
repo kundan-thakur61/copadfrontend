@@ -127,7 +127,10 @@ const customSlice = createSlice({
       })
       .addCase(createCustomOrder.fulfilled, (state, action) => {
         state.loading = false;
-        state.customOrders.unshift(action.payload.customOrder);
+        const customOrder = action.payload?.data?.customOrder || action.payload?.customOrder || action.payload;
+        if (customOrder) {
+          state.customOrders.unshift(customOrder);
+        }
         state.error = null;
       })
       .addCase(createCustomOrder.rejected, (state, action) => {
@@ -154,11 +157,14 @@ const customSlice = createSlice({
       })
       .addCase(verifyCustomPayment.fulfilled, (state, action) => {
         state.loading = false;
-        const index = state.customOrders.findIndex(
-          order => order._id === action.payload.customOrder._id
-        );
-        if (index !== -1) {
-          state.customOrders[index] = action.payload.customOrder;
+        const customOrder = action.payload?.data?.customOrder || action.payload?.customOrder || action.payload;
+        if (customOrder) {
+          const index = state.customOrders.findIndex(
+            order => order._id === customOrder._id
+          );
+          if (index !== -1) {
+            state.customOrders[index] = customOrder;
+          }
         }
         state.error = null;
       })

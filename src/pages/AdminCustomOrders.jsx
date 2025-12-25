@@ -117,6 +117,8 @@ export default function AdminCustomOrders() {
         {customOrders.map((order) => {
           const isExpanded = expandedOrderId === order._id;
           const hasPayment = order.payment?.status === 'paid';
+          const customer = order.userId || order.user;
+          const previewImage = order.mockupUrl || order.imageUrls?.[0]?.original?.url || order.imageUrls?.[0];
           
           return (
             <div key={order._id} className="bg-white rounded-lg shadow overflow-hidden">
@@ -124,7 +126,7 @@ export default function AdminCustomOrders() {
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="text-lg font-semibold">Order #{order._id.slice(-8)}</h3>
-                    <p className="text-sm text-gray-600">By: {order.user?.name} ({order.user?.email})</p>
+                    <p className="text-sm text-gray-600">By: {customer?.name} ({customer?.email})</p>
                     <p className="text-sm text-gray-500">Created: {new Date(order.createdAt).toLocaleDateString()}</p>
                   </div>
                   <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(order.status)}`}>
@@ -137,10 +139,10 @@ export default function AdminCustomOrders() {
                   <p className="text-gray-700">{order.description}</p>
                 </div>
 
-                {order.image && (
+                {previewImage && (
                   <div className="mb-4">
                     <h4 className="font-medium mb-2">Image:</h4>
-                    <img src={resolveImageUrl(order.image)} alt="Custom order" className="w-32 h-32 object-cover rounded" />
+                    <img src={resolveImageUrl(previewImage)} alt="Custom order" className="w-32 h-32 object-cover rounded" />
                   </div>
                 )}
 

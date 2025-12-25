@@ -4,6 +4,7 @@ import orderAPI from '../api/orderAPI';
 import AdminShiprocketManagement from '../components/AdminShiprocketManagement';
 import ShipmentTracking from '../components/ShipmentTracking';
 import { toast } from 'react-toastify';
+import { resolveImageUrl } from '../utils/helpers';
 
 /**
  * Admin Shipments Management Page
@@ -142,6 +143,51 @@ export default function AdminShipments() {
                       <p className="mt-2">📞 {order.shippingAddress?.phone}</p>
                     </div>
                   </div>
+
+                  {/* Order Items */}
+                  {order.items?.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold mb-2">Items</h4>
+                      <div className="bg-white p-4 rounded-lg divide-y">
+                        {order.items.map((item, idx) => {
+                          const imageUrl = resolveImageUrl(
+                            item.image ||
+                              item.productId?.design?.imgSrc ||
+                              item.productId?.images?.[0]?.url ||
+                              item.productId?.images?.[0]
+                          );
+                          return (
+                            <div
+                              key={`${order._id}-${item.variantId || idx}`}
+                              className="py-3 flex gap-4 items-center"
+                            >
+                              <div className="w-16 h-16 rounded bg-gray-100 flex items-center justify-center overflow-hidden">
+                                {imageUrl ? (
+                                  <img
+                                    src={imageUrl}
+                                    alt={item.title || item.productId?.title || 'Item'}
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : (
+                                  <span className="text-xs text-gray-400">No image</span>
+                                )}
+                              </div>
+                              <div className="flex-1">
+                                <p className="font-semibold">
+                                  {item.title || item.productId?.title || 'Item'}
+                                </p>
+                                <p className="text-sm text-gray-600">
+                                  {item.model || item.productId?.model || ''}
+                                  {item.color ? ` • ${item.color}` : ''}
+                                </p>
+                                <p className="text-sm text-gray-700">Qty {item.quantity} • ₹{item.price}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Shiprocket Status */}
                   {order.shiprocket?.shipmentId && (

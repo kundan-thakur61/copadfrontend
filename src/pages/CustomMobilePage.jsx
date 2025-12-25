@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import mobileAPI from '../api/mobileAPI';
+import uploadAPI from '../api/uploadAPI';
 import Loader from '../components/Loader';
 import SEO from '../components/SEO';
 import { formatPrice, resolveImageUrl } from '../utils/helpers';
@@ -124,6 +125,8 @@ const CustomMobilePage = () => {
   const [selectedMaterial, setSelectedMaterial] = useState(MATERIAL_OPTIONS[0]);
   const [quantity, setQuantity] = useState(1);
   const [imagePreview, setImagePreview] = useState('');
+  const [uploadedAsset, setUploadedAsset] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [loadingCompanies, setLoadingCompanies] = useState(true);
   const [loadingModels, setLoadingModels] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -276,6 +279,7 @@ const CustomMobilePage = () => {
     }
     const reader = new FileReader();
     reader.onload = (e) => {
+      setUploadedAsset(null);
       setImagePreview(e.target.result);
     };
     reader.readAsDataURL(file);
@@ -332,6 +336,26 @@ const CustomMobilePage = () => {
     script.onerror = () => reject(new Error('Failed to load Razorpay SDK'));
     document.body.appendChild(script);
   });
+
+  const uploadDesignToCloudinary = async () => {
+    if (uploadedAsset?.url) return uploadedAsset;
+    if (!imagePreview) throw new Error('Upload an image first');
+    setUploadingImage(true);
+    try {
+      const result = await uploadAPI.uploadBase64Image({ image: imagePreview });
+      const data = result?.data?.data || result?.data;
+      const url = data?.url || data?.secure_url;
+      const publicId = data?.publicId || data?.public_id;
+      if (!result?.success || !url) {
+        throw new Error('Image upload failed');
+      }
+      const asset = { url, publicId };
+      setUploadedAsset(asset);
+      return asset;
+    } finally {
+      setUploadingImage(false);
+    }
+  };
 
   const initiatePayment = async (customOrder) => {
   try {
@@ -426,11 +450,17 @@ const CustomMobilePage = () => {
       toast.error('Upload a high quality image for the print.');
       return;
     }
+    if (uploadingImage) {
+      toast.error('Image upload in progress. Please wait.');
+      return;
+    }
 
     if (!validateShipping()) {
       toast.error('Please review your shipping details.');
       return;
     }
+
+    const asset = await uploadDesignToCloudinary();
 
     const payload = {
       variant: {
@@ -441,8 +471,9 @@ const CustomMobilePage = () => {
         sku: `custom-${selectedMaterial?.id || 'generic'}`,
       },
       quantity,
-      imageUrls: [imagePreview],
-      mockupUrl: imagePreview,
+      imageUrls: [asset.url],
+      mockupUrl: asset.url,
+      mockupPublicId: asset.publicId,
       instructions: specialNotes,
       designData: {
         companyId: selectedCompany._id,
@@ -734,6 +765,7 @@ const CustomMobilePage = () => {
                     onClick={(event) => {
                       event.stopPropagation();
                       setImagePreview('');
+                      setUploadedAsset(null);
                     }}
                   >
                     Remove image
