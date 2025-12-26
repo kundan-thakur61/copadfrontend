@@ -31,13 +31,13 @@ const slugifyId = (value) => {
 const materialOptions = [
   {
     id: 'matte',
-    price: 299,
+    price: 199,
     label: 'Glossy Metal',
     blurb: 'Smooth aur shiny look. Strong & durable',
   },
   {
     id: 'gloss',
-    price: 399,
+    price: 249,
     label: 'Glossy Metal + Gel',
     blurb: 'Extra shine. 3D premium protection',
   },

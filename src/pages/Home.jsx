@@ -74,12 +74,12 @@ const Home = () => {
       {/* Mobile Covers */}
       <Link
         to="/themes"
-        className="block rounded-xl overflow-hidden "
+        className="block rounded-xl overflow-hidden  "
       >
          <img
                 src="https://res.cloudinary.com/dwmytphop/image/upload/v1766311084/main_background_theame_ni9f5a.png"
                 alt="Cover Ghar"
-          className="w-full h-auto object-contain"
+          className="w-full h-auto object-contain transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 ... "
         />
       </Link>
 
@@ -91,7 +91,7 @@ const Home = () => {
          <img
                 src="https://res.cloudinary.com/dwmytphop/image/upload/v1766311082/Customised_theam_ghg4jm.png"
                 alt="Cover Ghar"
-          className="w-full h-auto object-contain"
+          className="w-full h-auto object-contain transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 ..."
         />
       </Link>
 

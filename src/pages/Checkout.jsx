@@ -107,7 +107,7 @@ export default function Checkout() {
     if (!user) {
       toast.error('Please log in to place an order');
       const redirectUrl = encodeURIComponent(window.location.pathname + window.location.search);
-      navigate(`/login?redirect=${redirectUrl}`);
+      navigate('/register?' + new URLSearchParams({ redirectUrl }).toString());
       return;
     }
 

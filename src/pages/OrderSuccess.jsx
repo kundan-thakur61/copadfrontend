@@ -317,7 +317,7 @@ export default function OrderSuccess() {
                   <div className="flex-1">
                     <h3 className="font-medium text-gray-900">{item.product?.title || item.name || item.productName}</h3>
                     <p className="text-sm text-gray-600 mt-1">
-                      {item.variant?.name || item.variant?.color || item.variantName || ''} × {item.quantity}
+                      {([item.product?.brand || item.brand, item.product?.model || item.model, item.variant?.name || item.variant?.color || item.variantName || item.color].filter(Boolean).join(' • ') || '—')} × {item.quantity}
                     </p>
                   </div>
                   <div className="font-semibold text-gray-900 sm:text-right">

@@ -142,7 +142,7 @@ function App() {
 
         { path: 'cart', element: <Cart /> },
         { path: 'login', element: <Login /> },
-        { path: 'signup', element: <Signup /> },
+        { path: 'register', element: <Signup /> },
         { path: 'customizer', element: <CustomMobilePage /> },
         { path: 'customizer/:slug', element: <CustomMobilePage /> },
         { path: 'custom-mobile', element: <CustomMobilePage /> },

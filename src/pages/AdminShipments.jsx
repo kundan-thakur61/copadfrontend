@@ -177,8 +177,13 @@ export default function AdminShipments() {
                                   {item.title || item.productId?.title || 'Item'}
                                 </p>
                                 <p className="text-sm text-gray-600">
-                                  {item.model || item.productId?.model || ''}
-                                  {item.color ? ` • ${item.color}` : ''}
+                                  {[
+                                    item.brand || item.productId?.brand || item.productId?.company?.name,
+                                    item.model || item.productId?.model,
+                                    item.color
+                                  ]
+                                    .filter(Boolean)
+                                    .join(' • ')}
                                 </p>
                                 <p className="text-sm text-gray-700">Qty {item.quantity} • ₹{item.price}</p>
                               </div>

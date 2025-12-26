@@ -119,6 +119,11 @@ export default function AdminCustomOrders() {
           const hasPayment = order.payment?.status === 'paid';
           const customer = order.userId || order.user;
           const previewImage = order.mockupUrl || order.imageUrls?.[0]?.original?.url || order.imageUrls?.[0];
+          const deviceInfo = [
+            order.productId?.brand || order.productId?.company?.name,
+            order.productId?.model,
+            order.variant?.color
+          ].filter(Boolean).join(' • ');
           
           return (
             <div key={order._id} className="bg-white rounded-lg shadow overflow-hidden">
@@ -127,6 +132,7 @@ export default function AdminCustomOrders() {
                   <div>
                     <h3 className="text-lg font-semibold">Order #{order._id.slice(-8)}</h3>
                     <p className="text-sm text-gray-600">By: {customer?.name} ({customer?.email})</p>
+                    {deviceInfo && <p className="text-sm text-gray-600">{deviceInfo}</p>}
                     <p className="text-sm text-gray-500">Created: {new Date(order.createdAt).toLocaleDateString()}</p>
                   </div>
                   <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(order.status)}`}>
