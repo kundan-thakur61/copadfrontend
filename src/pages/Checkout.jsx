@@ -128,8 +128,6 @@ export default function Checkout() {
           const price = Number(item.variant?.price ?? item.price ?? 0);
 
           const baseItem = {
-            productId,
-            variantId,
             quantity,
             price,
           };
@@ -143,6 +141,9 @@ export default function Checkout() {
               price,
             };
             baseItem.title = item.product?.title || 'Custom product';
+          } else {
+            baseItem.productId = productId;
+            baseItem.variantId = variantId;
           }
 
           return baseItem;
